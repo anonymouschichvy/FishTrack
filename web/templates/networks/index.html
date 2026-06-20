@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Mesh Network Topology - FishTrack{% endblock %}
+
+{% block crumb %}Networks Map{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/networks.css">
+    <script src="/static/js/networks.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="welcome-hero" style="background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);" id="networksHero">
+    <div class="hero-text">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Mesh Network Topology
+        </h1>
+        <p>Real-time Node Hop Vectors, Link Signals & Dynamic Routing Tables</p>
+    </div>
+    <div class="hero-status">
+        <span class="status-badge status-online" style="background: rgba(255,255,255,0.2); color: white;" id="netBadge">
+            <span class="status-dot" style="background: #14b8a6;"></span> Mesh Active
+        </span>
+    </div>
+</div>
+
+<!-- Educational Explainer Panel -->
+<div class="info-card-wizard" id="networksExplainer">
+    <div class="wizard-header">
+        <span class="wizard-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Mesh Routing Explainer
+        </span>
+        <h3>Understanding Self-Healing Ad-Hoc Networks</h3>
+    </div>
+    <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+        <p><strong>What does this visualizer do?</strong> It maps the spatial topology and hop vectors of the buoy sensor network. Node connections represent active LoRa RF links. The Base Station acts as the network sink node (the ultimate receiver of all data).</p>
+        <p><strong>What is "Self-Healing"?</strong> Marine environments are unstable; waves and obstacles can break line-of-sight. If a node cannot contact the Base Station directly (Hops = 1), it dynamically routes its data through an intermediate neighbor (Hops &gt; 1). The network automatically reorganizes pathways to ensure telemetry packet delivery.</p>
+    </div>
+</div>
+
+<!-- Stats Summary Grid -->
+<div class="stats-summary" id="networkStatsGrid">
+    <div class="stat-summary-card">
+        <div class="stat-summary-label">Active Mesh Nodes</div>
+        <div class="stat-summary-value" id="active-count">0</div>
+    </div>
+    <div class="stat-summary-card">
+        <div class="stat-summary-label">Active Hop Links</div>
+        <div class="stat-summary-value" id="neighbor-count">0</div>
+    </div>
+    <div class="stat-summary-card">
+        <div class="stat-summary-label">Average Link RSSI</div>
+        <div class="stat-summary-value" id="network-health">0 dBm</div>
+    </div>
+</div>
+
+<!-- Interactive D3 Topology Visualizer Card -->
+<div class="network-card" id="panelTopologyMap">
+    <div class="card-header-flex" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Interactive Mesh Routing Map
+        </h3>
+        <span class="status-pill info">Drag nodes to inspect links</span>
+    </div>
+    <p class="educational-note">D3.js Force-directed node layout. Green lines indicate strong, direct links; amber lines show multi-hop relays; hover nodes to inspect codenames, RSSI, and battery percentages.</p>
+    
+    <div class="svg-container-wrapper" style="margin-top: 1.5rem; position: relative;">
+        <!-- HUD Zoom & Control Overlay -->
+        <div class="map-controls">
+            <button class="map-control-btn" id="zoomInBtn" title="Zoom In">+</button>
+            <button class="map-control-btn" id="zoomOutBtn" title="Zoom Out">−</button>
+            <button class="map-control-btn" id="zoomResetBtn" title="Reset Zoom">⟲</button>
+            <div class="map-control-divider"></div>
+            <button class="map-control-btn" id="toggleFlowBtn" title="Toggle Animated Telemetry Flow" style="color: var(--primary);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-icon" style="vertical-align: middle;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+            <button class="map-control-btn" id="toggleLabelsBtn" title="Toggle Link Labels" style="font-size:0.75rem; font-family:sans-serif; font-weight:bold; color: var(--primary);">Abc</button>
+        </div>
+
+        <!-- D3 SVG Canvas -->
+        <svg id="topologySvg" style="width:100%; height:450px; background: var(--bg-app); border-radius:12px; border: 1px solid var(--border);"></svg>
+        
+        <!-- Glassmorphism Tooltip -->
+        <div id="mapTooltip"></div>
+    </div>
+</div>
+
+<!-- Interactive Node Inspector Drawer -->
+<div class="inspect-card" id="nodeInspectCard">
+    <div class="inspect-header">
+        <h3 class="inspect-title" id="inspectNodeTitle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-icon" style="color: var(--primary); vertical-align: middle; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            Selected Node: <span id="inspectNodeName">BUOY-POSEIDON</span>
+        </h3>
+        <button class="close-btn" onclick="closeNodeInspector()" style="min-height:unset; font-size:1.5rem; background:none; border:none; color:var(--text-muted); cursor:pointer;">&times;</button>
+    </div>
+    
+    <div class="inspect-grid">
+        <div class="inspect-cell">
+            <span class="inspect-label">Node Status</span>
+            <span class="inspect-value" id="inspectNodeStatus">ONLINE</span>
+        </div>
+        <div class="inspect-cell">
+            <span class="inspect-label">Battery Level</span>
+            <span class="inspect-value" id="inspectNodeBattery">88%</span>
+        </div>
+        <div class="inspect-cell">
+            <span class="inspect-label">Hop Relays</span>
+            <span class="inspect-value" id="inspectNodeHops">1 Hop</span>
+        </div>
+        <div class="inspect-cell">
+            <span class="inspect-label">Last Transmission</span>
+            <span class="inspect-value" id="inspectNodeSeen" style="font-size:0.95rem; font-family:monospace; margin-top:2px;">02/11 14:44:14</span>
+        </div>
+    </div>
+    
+    <div>
+        <h4 class="inspect-peers-title">Mesh Connections (Direct Peers)</h4>
+        <div class="table-container">
+            <table style="box-shadow:none;">
+                <thead>
+                    <tr>
+                        <th>Peer Node</th>
+                        <th>Signal RSSI</th>
+                        <th>Link Status</th>
+                    </tr>
+                </thead>
+                <tbody id="inspectPeersTableBody">
+                    <!-- Javascript populates link vectors here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Active Node List -->
+<div class="network-card" id="panelNodeTable">
+    <div class="card-header-flex" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            Telemetry Registry (Routing Table)
+        </h3>
+        <span class="status-pill success" id="registryCount">0 registered</span>
+    </div>
+    <p class="educational-note">Overview of all active nodes within radio contact of the Base Station sink.</p>
+    
+    <div class="table-container" style="margin-top:1.5rem;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Codename</th>
+                    <th>Status</th>
+                    <th>Last Seen</th>
+                    <th>Hops</th>
+                    <th>RSSI</th>
+                    <th>Link Quality</th>
+                </tr>
+            </thead>
+            <tbody id="active-list">
+                <tr>
+                    <td colspan="6">
+                        <div class="loading-container">
+                            <div class="spinner"></div>
+                            <p class="loading-text">Loading active nodes...</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Neighbor Table -->
+<div class="network-card" id="panelNeighborTable">
+    <div class="card-header-flex" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Node Neighbor Table
+        </h3>
+        <span class="status-pill warning" id="neighborCount">0 links</span>
+    </div>
+    <p class="educational-note">Peer-to-peer radio link qualities reported by individual node scans.</p>
+    
+    <div class="table-container" style="margin-top:1.5rem;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Codename</th>
+                    <th>Neighbor</th>
+                    <th>Last Seen</th>
+                    <th>RSSI</th>
+                    <th>SNR</th>
+                    <th>Direct Link</th>
+                </tr>
+            </thead>
+            <tbody id="neighbor-table">
+                <tr>
+                    <td colspan="6">
+                        <div class="loading-container">
+                            <div class="spinner"></div>
+                            <p class="loading-text">Loading neighbors...</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block help_content %}
+<div class="help-section">
+    <h4>Network Docs</h4>
+    <p><strong>Mesh Topology:</strong> The Base Station occupies Node ID 0. Nodes route packets dynamically through paths with the highest RSSI/SNR signal values to avoid drops.</p>
+</div>
+<div class="help-section">
+    <h4>Signal Criteria</h4>
+    <p><strong>RSSI Values:</strong>
+        <br>• -30 to -70 dBm: Excellent
+        <br>• -70 to -90 dBm: Good
+        <br>• -90 to -110 dBm: Poor
+        <br>• -110+ dBm: Disconnected
+    </p>
+</div>
+<div class="help-section">
+    <h4>Glossary</h4>
+    <dl class="glossary-list">
+        <dt>Hop Count</dt>
+        <dd>The number of intermediate relay transmitters a packet travels through from source buoy to base station.</dd>
+        
+        <dt>SNR (Signal-to-Noise Ratio)</dt>
+        <dd>The difference in dB between the received signal level and the background ambient radio noise floor.</dd>
+    </dl>
+</div>
+{% endblock %}

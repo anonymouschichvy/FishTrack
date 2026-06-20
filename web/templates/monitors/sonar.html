@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Sonar Profiler - FishTrack{% endblock %}
+
+{% block crumb %}Sonar Profiler{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/sonar.css">
+    <script src="/static/js/sonar.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="welcome-hero" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);" id="sonarHero">
+    <div class="hero-text">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+            Sonar Detection Monitor
+        </h1>
+        <p>Acoustic Echo Sounding & Fish School Density Mapping</p>
+    </div>
+    <div class="hero-status">
+        <span class="status-badge" style="background: rgba(255,255,255,0.2); color: white;" id="freqBadge">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            200 kHz Transducer Active
+        </span>
+        <span class="hero-timer code" id="timestamp">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Loading...
+        </span>
+    </div>
+</div>
+
+<!-- Educational Explainer Panel -->
+<div class="info-card-wizard" id="sonarAcousticExplainer">
+    <div class="wizard-header">
+        <span class="wizard-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            Acoustic Sounding Explainer
+        </span>
+        <h3>How Echo Sounding Transmissions Work</h3>
+    </div>
+    <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+        <p><strong>What does this monitor do?</strong> It parses and displays ultrasonic sonar returns. The buoy transducer emits sound pulses into the water and listens for echoes that bounce back. When a sound wave encounters an object of different density (like a fish's air-filled swim bladder or the muddy seabed), it creates an echo. The time delay measures distance, while echo strength indicates target size.</p>
+        <p><strong>Why is it important?</strong> Sonar works continuously in turbid, dark, or muddy water where cameras cannot capture visual images, making it essential for tracking fish school movements overnight.</p>
+    </div>
+</div>
+
+<!-- Stats Counter Grid -->
+<div class="stats-grid" id="sonarStatsGrid">
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Total Sonar Scans</span>
+            <div class="stat-icon" style="background: var(--info-light); color: var(--info);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="total-scans">-</div>
+        <div class="stat-change">Pings recorded by nodes</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Scans with Fish</span>
+            <div class="stat-icon" style="background: var(--success-light); color: var(--success);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16s9-15 20-4C11 23 2 16 2 16Z"/><circle cx="18" cy="10" r="1"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="scans-with-fish">-</div>
+        <div class="stat-change">Positive echo detections</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Estimated Fish Count</span>
+            <div class="stat-icon" style="background: var(--warning-light); color: var(--warning);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="total-fish">-</div>
+        <div class="stat-change">Cumulative biomass targets</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Detection Rate</span>
+            <div class="stat-icon" style="background: var(--primary-light); color: var(--primary);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="detection-rate">-%</div>
+        <div class="stat-change">Percentage of positive scans</div>
+    </div>
+</div>
+
+<div class="card-container" id="panelSonarChart">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Hit Rate
+        </h3>
+        <span class="status-pill info">Transducer telemetry</span>
+    </div>
+    <p class="educational-note">Visual progress ring displaying the ratio of positive fish pings.</p>
+    
+    <div class="chart-panel-body">
+        <div class="chart-container" style="position: relative; width: 200px; height: 200px;">
+            <svg width="200" height="200" class="progress-ring" style="transform: rotate(-90deg);">
+                <circle cx="100" cy="100" r="85" stroke="var(--border)" stroke-width="15" fill="none"/>
+                <circle id="progress-circle" cx="100" cy="100" r="85"
+                    stroke="var(--primary)" stroke-width="15" fill="none" stroke-linecap="round"
+                    style="stroke-dasharray: 534; stroke-dashoffset: 534; transition: stroke-dashoffset 0.5s ease-out;"/>
+            </svg>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                <div id="chart-percentage" style="font-size: 1.8rem; font-weight: 750; color: var(--text-primary);">0%</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Active Hit</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-container" id="panelRecentScans">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C5.8 7 7 5.6 8.5 5.6c1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/><path d="M2 12c.6.5 1.2 1 2.5 1 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/><path d="M2 18c.6.5 1.2 1 2.5 1 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/></svg>
+            Recent Ultrasonic Returns
+        </h3>
+        <span class="status-pill online">Ping history</span>
+    </div>
+    <p class="educational-note">Recent echo scan logs, detailing water depth and estimated biomass distance.</p>
+    
+    <div class="scans-grid sonar-scans-grid" id="scans-grid">
+        <div class="loading-block">
+            <div class="spinner"></div>
+            <p>Loading returns history...</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block help_content %}
+<div class="help-section">
+    <h4>Sonar Monitor Docs</h4>
+    <p><strong>Transducer Frequency:</strong> The buoy utilizes a 200 kHz frequency transducer. High frequency (200 kHz) provides excellent resolution for small targets (like individual shrimp or bait fish) in shallow coastal waters (under 100 meters).</p>
+</div>
+<div class="help-section">
+    <h4>Sonar Troubleshooting</h4>
+    <p><strong>No fish detected?</strong> If the detection rate remains 0% for an extended period, verify:
+        <ul style="padding-left: 1rem; font-size: 0.825rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.25rem;">
+            <li>Transducer is fully submerged in the water.</li>
+            <li>No biofouling (barnacles or algae) on the transducer face.</li>
+            <li>Buoy is not listing/tilted due to heavy waves (which causes the sonar beam to point sideways).</li>
+        </ul>
+    </p>
+</div>
+<div class="help-section">
+    <h4>Glossary</h4>
+    <dl class="glossary-list">
+        <dt>Ultrasonic Transducer</dt>
+        <dd>A device that converts electrical energy into high-frequency sound waves and vice versa.</dd>
+        
+        <dt>Biomass Target</dt>
+        <dd>A generic term representing organic matter detected by acoustic waves, typically representing individual fish or schools.</dd>
+    </dl>
+</div>
+{% endblock %}

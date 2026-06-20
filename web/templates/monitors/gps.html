@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}GPS Tracking Monitor - FishTrack{% endblock %}
+
+{% block crumb %}GPS Tracking{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/gps.css">
+    <script src="/static/js/gps.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="welcome-hero" style="background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);" id="gpsHero">
+    <div class="hero-text">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            GPS Tracking Monitor
+        </h1>
+        <p>Real-time Geographic Tracking, Drift Rate, & Satellite Fix Status</p>
+    </div>
+    <div class="hero-status">
+        <span class="status-badge" style="background: rgba(255,255,255,0.2); color: white;" id="fix-quality">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6a6 6 0 0 1 6 6m-12 0a6 6 0 0 1 6-6m-9 6h18m-9-9v18"/></svg>
+            GPS Lock Active
+        </span>
+        <span class="hero-timer code" id="timestamp">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Loading...
+        </span>
+    </div>
+</div>
+
+<!-- Educational Explainer Panel -->
+<div class="info-card-wizard" id="gpsGeofenceExplainer">
+    <div class="wizard-header">
+        <span class="wizard-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            Satellite Telemetry Explainer
+        </span>
+        <h3>How Marine GPS Drift Tracking Works</h3>
+    </div>
+    <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+        <p><strong>What does this monitor do?</strong> It maps the current coordinates and historical tracking paths of buoy nodes in the field. Each buoy queries its onboard GPS module to calculate its location using timing signals received from global navigation satellites.</p>
+        <p><strong>Why is it important?</strong> Ocean currents and winds cause buoys to drift. Continuous geographic tracking prevents device loss and provides valuable drift rate data representing local tidal and marine currents.</p>
+    </div>
+</div>
+
+<!-- GPS Stats Grid -->
+<div class="stats-grid" id="gpsStatsGrid">
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Tracked Points</span>
+            <div class="stat-icon" style="background: var(--info-light); color: var(--info);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="stat-points">0</div>
+        <div class="stat-change">Total stored track coordinates</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Active Satellites</span>
+            <div class="stat-icon" style="background: var(--success-light); color: var(--success);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6a6 6 0 0 1 6 6m-12 0a6 6 0 0 1 6-6m-9 6h18m-9-9v18"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="stat-satellites">0</div>
+        <div class="stat-change">Visible GNSS satellites locked</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Altitude</span>
+            <div class="stat-icon" style="background: var(--warning-light); color: var(--warning);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="stat-altitude">0m</div>
+        <div class="stat-change">Elevation above sea level</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Drift Speed</span>
+            <div class="stat-icon" style="background: var(--primary-light); color: var(--primary);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="stat-speed">0 km/h</div>
+        <div class="stat-change">Current drift rate scalar</div>
+    </div>
+</div>
+
+<!-- Interactive Map Card -->
+<div class="card-container" id="panelMapContainer">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/></svg>
+            Live Geofence Track
+        </h3>
+        <span class="status-pill online">Leaflet Map Active</span>
+    </div>
+    <p class="educational-note">Interactive map showing buoy path. Green represents starting point; red represents latest received position.</p>
+    
+    <div class="map-wrapper" style="position: relative; height: 450px; margin-top: 1rem; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border);">
+        <div id="map" style="height: 100%; width: 100%;"></div>
+        <div class="map-overlay" style="position: absolute; bottom: 15px; left: 15px; background: var(--bg-surface); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); z-index: 1000; font-size: 0.8rem;">
+            <strong>Points Count:</strong> <span id="point-count">0</span>
+        </div>
+    </div>
+</div>
+
+<!-- Timeline Track Logs -->
+<div class="card-container" style="margin-top: 1.5rem;" id="panelTimelineContainer">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Geographic Drift Timeline
+        </h3>
+        <span class="status-pill info">Click row to focus map</span>
+    </div>
+    <p class="educational-note">Chronological drift log. Click any row to pan the map to that coordinate.</p>
+
+    <div class="drift-table-wrap" id="timeline-container">
+        <div class="no-data">
+            <div class="loading-block">
+                <div class="spinner"></div>
+                <p>Loading timeline...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block help_content %}
+<div class="help-section">
+    <h4>GPS Tracking Docs</h4>
+    <p><strong>Fix Quality Levels:</strong> Fix quality represents the spatial accuracy of coordinates based on the sat lock method:</p>
+    <ul style="padding-left: 1rem; font-size: 0.825rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.25rem;">
+        <li><strong>3D Fix:</strong> Locked to 4+ satellites, providing lat, lon, and altitude. High accuracy (under 5m).</li>
+        <li><strong>2D Fix:</strong> Locked to 3 satellites, providing lat and lon only. Medium accuracy.</li>
+        <li><strong>No Fix:</strong> Insufficient satellites. Search mode active.</li>
+    </ul>
+</div>
+<div class="help-section">
+    <h4>Anchor Geofencing</h4>
+    <p><strong>Drifting Alert:</strong> Buoy settings allow configuring a geofence radius. If a buoy's coordinates exceed the fence radius, a warning notification is displayed in the notification drawer.</p>
+</div>
+<div class="help-section">
+    <h4>Glossary</h4>
+    <dl class="glossary-list">
+        <dt>GNSS</dt>
+        <dd>Global Navigation Satellite System, the umbrella term representing satellite navigation networks like GPS, GLONASS, Galileo, and BeiDou.</dd>
+        
+        <dt>NMEA Sentence</dt>
+        <dd>Standard data format sent by GPS receivers containing coordinates, speed, and time metrics.</dd>
+    </dl>
+</div>
+{% endblock %}

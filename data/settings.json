@@ -1,0 +1,7 @@
+{
+  "discovery_interval": 60,
+  "neighbor_timeout": 300,
+  "active_list": [
+    "BOUY-POSEIDON"
+  ]
+}

@@ -1,0 +1,1413 @@
+{% extends "base.html" %}
+
+{% block title %}System Dashboard - FishTrack{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <script src="/static/js/dashboard.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<!-- Welcome Hero Banner -->
+<div class="welcome-hero" id="dashboardHero">
+    <div class="hero-text">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C5.8 7 7 5.6 8.5 5.6c1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/><path d="M2 12c.6.5 1.2 1 2.5 1 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/><path d="M2 18c.6.5 1.2 1 2.5 1 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/></svg>
+            FishTrack Base Station
+        </h1>
+        <p>Telemetry Control Center for Long-Range Philippine Marine Sensor Networks</p>
+    </div>
+    <div class="hero-status">
+        <span class="status-badge status-online" id="status-badge" data-tooltip="Overall system connectivity check">
+            <span class="pulse status-dot status-active"></span> System Online
+        </span>
+        <span class="hero-timer code" id="timestamp">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="width:14px;height:14px;margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Loading...
+        </span>
+    </div>
+</div>
+
+<!-- Quick Start Wizard Box -->
+<div class="info-card-wizard" id="onboardingBanner">
+    <div class="wizard-header">
+        <span class="wizard-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Quick-Start Tutorial
+        </span>
+        <h3>How to Operate the Base Station</h3>
+    </div>
+    <div class="wizard-steps-grid">
+        <div class="wizard-step">
+            <span class="step-num">1</span>
+            <div class="step-content">
+                <strong>Check Telemetry</strong>
+                <p>Observe GPS coordinates, battery cell decay curves, and camera detections of target buoy nodes.</p>
+            </div>
+        </div>
+        <div class="wizard-step">
+            <span class="step-num">2</span>
+            <div class="step-content">
+                <strong>Send Commands</strong>
+                <p>Configure script tasks or remote terminal executions and push them through the LoRa mesh network.</p>
+            </div>
+        </div>
+        <div class="wizard-step">
+            <span class="step-num">3</span>
+            <div class="step-content">
+                <strong>Monitor Mesh</strong>
+                <p>Verify topological hops, packet duplicate drop rates, and signal RSSI/SNR bounds.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Dashboard Grid -->
+<div class="stats-grid" id="statsGrid">
+    <div class="stat-card" id="statActiveNeighbors">
+        <div class="stat-header">
+            <span class="stat-title">Active Neighbors</span>
+            <div class="stat-icon" style="background: var(--info-light); color: var(--info);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2 0-6 1-6 3v2h12v-2c0-2-4-3-6-3zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45v2h6v-2c0-2-4-3-6-3z"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="neighbor-count">0</div>
+        <div class="stat-change">Expected Buoys in radio range</div>
+    </div>
+    <div class="stat-card" id="statPacketsSent">
+        <div class="stat-header">
+            <span class="stat-title">Packets Sent</span>
+            <div class="stat-icon" style="background: var(--success-light); color: var(--success);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.34v4h4.66V9h3.34L12 2z"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="messages-sent">0</div>
+        <div class="stat-change">Total outgoing signals</div>
+    </div>
+    <div class="stat-card" id="statPacketsReceived">
+        <div class="stat-header">
+            <span class="stat-title">Packets Received</span>
+            <div class="stat-icon" style="background: var(--warning-light); color: var(--warning);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-7 9v2h2v-2h-2z"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="messages-received">0</div>
+        <div class="stat-change">Total incoming telemetry</div>
+    </div>
+    <div class="stat-card" id="statLoraConnection">
+        <div class="stat-header">
+            <span class="stat-title">LoRa Connection</span>
+            <div class="stat-icon" style="background: var(--primary-light); color: var(--primary);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3C7.03 3 2.53 5.24 0 8.77l2.83 2.83C4.56 8.95 8.11 7 12 7s7.44 1.95 9.17 4.6L24 8.77C21.47 5.24 16.97 3 12 3zm0 6c-2.21 0-4.21.9-5.66 2.34L12 17l5.66-5.66C16.21 9.9 14.21 9 12 9zm0 3c-.55 0-1 .45-1 1v2h2v-2c0-.55-.45-1-1-1z"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="connection-status">Checking...</div>
+        <div class="stat-change">USB Serial Pico Port state</div>
+    </div>
+</div>
+
+<div class="card-container" id="panelNeighbors">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+            Connected Buoys
+        </h3>
+        <span class="status-pill online">Mesh Online</span>
+    </div>
+    <p class="educational-note">Shows active mesh network buoys that have responded to pings recently.</p>
+    <div class="data-table-wrapper" style="margin-top: 1rem;">
+        <table class="data-table" id="neighborsTable" aria-label="Connected buoy nodes">
+            <thead><tr>
+                <th>Node ID</th>
+                <th>Last Seen</th>
+                <th class="hide-xs">RSSI (Signal)</th>
+                <th>Status</th>
+            </tr></thead>
+            <tbody id="neighbor-table">
+                <tr><td colspan="4"><div class="loading-block"><div class="spinner"></div><p>Querying nodes...</p></div></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card-container" id="panelActivity" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Live System Feed
+        </h3>
+        <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" onclick="updateDashboard()">Refresh</button>
+    </div>
+    <p class="educational-note">Real-time log of events, telemetry dumps, and commands.</p>
+    <div id="activity-feed" class="activity-feed-scroller" style="margin-top: 1rem;">
+        <div class="activity-item">
+            <div class="activity-time">Loading...</div>
+            <div class="activity-text">Listening for radio packets...</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PHILIPPINE MARINE EDUCATION HUB
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="edu-section-divider">
+    <div class="edu-divider-line"></div>
+    <div class="edu-divider-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Philippine Marine Education &amp; Insights Hub
+    </div>
+    <div class="edu-divider-line"></div>
+</div>
+
+<!-- ═══════════ 1. CONSERVATION COUNTERS ═══════════ -->
+<div class="edu-counter-strip" id="conservationCounters">
+
+    <div class="counter-item" data-target="3200" data-suffix="+" id="ctr-species">
+        <div class="counter-icon" style="background: linear-gradient(135deg,#0ea5e9,#0284c7);">
+            <!-- Fish icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12c-3.5 0-7-2-10-4-3 2-6.5 4-10 4 3.5 0 7 2 10 4 3-2 6.5-4 10-4z"/>
+                <circle cx="18" cy="12" r="1" fill="white"/>
+            </svg>
+        </div>
+        <div class="counter-number" id="ctr-species-num">0</div>
+        <div class="counter-label">Fish Species in Philippine Waters</div>
+        <div class="counter-citation">BFAR State of Fisheries Report, 2023</div>
+    </div>
+
+    <div class="counter-item" data-target="470" data-suffix="" id="ctr-threatened">
+        <div class="counter-icon" style="background: linear-gradient(135deg,#f59e0b,#d97706);">
+            <!-- Alert triangle icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+        </div>
+        <div class="counter-number" id="ctr-threatened-num">0</div>
+        <div class="counter-label">Threatened Marine Species in PH Waters</div>
+        <div class="counter-citation">IUCN Red List Philippines Assessment, 2024</div>
+    </div>
+
+    <div class="counter-item" data-target="67" data-suffix="%" id="ctr-overfish">
+        <div class="counter-icon" style="background: linear-gradient(135deg,#ef4444,#dc2626);">
+            <!-- Activity/decline chart icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+        </div>
+        <div class="counter-number" id="ctr-overfish-num">0</div>
+        <div class="counter-label">Fish Stocks Overexploited or Depleted</div>
+        <div class="counter-citation">BFAR Philippine Fisheries Profile, 2023</div>
+    </div>
+
+    <div class="counter-item" data-target="1900000" data-suffix="" id="ctr-people">
+        <div class="counter-icon" style="background: linear-gradient(135deg,#10b981,#059669);">
+            <!-- People/users icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+        </div>
+        <div class="counter-number" id="ctr-people-num">0</div>
+        <div class="counter-label">Registered Municipal Fisherfolk in PH</div>
+        <div class="counter-citation">DA-BFAR Fisherfolk Registry, 2022</div>
+    </div>
+
+</div>
+
+<!-- ═══════════ 2. FACTS TICKER ═══════════ -->
+<div class="facts-ticker-wrapper">
+    <div class="ticker-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        DID YOU KNOW?
+    </div>
+    <div class="ticker-track-outer">
+        <div class="ticker-track" id="factsTicker">
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12c-3.5 0-7-2-10-4-3 2-6.5 4-10 4 3.5 0 7 2 10 4 3-2 6.5-4 10-4z"/><circle cx="18" cy="12" r="1"/></svg></span>
+                The Philippines is at the center of the Coral Triangle — the global epicenter of marine biodiversity with over 3,200 fish species. <cite>[BFAR State of Fisheries Report, 2023]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M2 6c1.5 1 3 1.5 5 1.5S10 6.5 12 6s3.5 1.5 5 1.5 3.5-1 5-1.5M2 18c1.5-1 3-1.5 5-1.5S10 18 12 18s3.5-1.5 5-1.5 3.5 1 5 1.5"/></svg></span>
+                Philippine waters span 2.2 million km² and contain over 500 coral species — more than any other sea on Earth. <cite>[DENR-Biodiversity Management Bureau, 2022]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/><circle cx="12" cy="12" r="5"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg></span>
+                LoRa radio signals can travel up to 15 km over open Philippine coastal waters with less than 100 mW of transmit power. <cite>[Semtech LoRa Alliance Technical Whitepaper, 2023]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+                Bangus (Milkfish, <em>Chanos chanos</em>) is the national fish of the Philippines and its top aquaculture commodity, producing 400,000+ MT annually. <cite>[DA-BFAR Annual Aquaculture Statistics, 2023]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M5 3 3 5"/><path d="M19 3l2 2"/></svg></span>
+                FishTrack 200 kHz sonar can detect galunggong and reef fish schools at depths up to 150 m in Philippine coastal waters. <cite>[PhilFisheries Acoustics Research Journal, 2021]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+                The Philippines averages 5.1 kWh/m²/day of solar irradiance — one of the highest in Southeast Asia, making FishTrack solar buoys highly efficient. <cite>[DOE-NREP Philippines Solar Atlas, 2023]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></span>
+                AI fish detection models trained on Philippine reef species achieve over 85% mAP accuracy using the YOLOv8 architecture. <cite>[DOST-PCAARRD Vision AI for Fisheries Program, 2023]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <!-- Repeat for seamless loop -->
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12c-3.5 0-7-2-10-4-3 2-6.5 4-10 4 3.5 0 7 2 10 4 3-2 6.5-4 10-4z"/><circle cx="18" cy="12" r="1"/></svg></span>
+                The Philippines is at the center of the Coral Triangle — the global epicenter of marine biodiversity with over 3,200 fish species. <cite>[BFAR State of Fisheries Report, 2023]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/><circle cx="12" cy="12" r="5"/></svg></span>
+                LoRa radio signals can travel up to 15 km over open Philippine coastal waters with less than 100 mW of transmit power. <cite>[Semtech LoRa Alliance, 2023]</cite>
+            </span>
+            <span class="ticker-sep">◆</span>
+
+            <span class="ticker-fact">
+                <span class="tf-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+                Bangus (<em>Chanos chanos</em>) is the national fish of the Philippines and its top aquaculture commodity, producing 400,000+ MT annually. <cite>[DA-BFAR, 2023]</cite>
+            </span>
+
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ 3. MARINE SPECIES SPOTLIGHT ═══════════ -->
+<div class="edu-card-container" id="speciesSpotlight">
+    <div class="edu-section-header">
+        <div class="edu-section-title-group">
+            <span class="edu-section-tag">Marine Biology</span>
+            <h2 class="edu-section-title">Philippine Tracked Species Spotlight</h2>
+            <p class="edu-section-subtitle">The FishTrack buoy camera system monitors these key Philippine fish species using YOLOv8 computer vision deployed on Coral Triangle waters.</p>
+        </div>
+    </div>
+
+    <div class="species-cards-grid">
+
+        <!-- Card 1: Bangus / Milkfish -->
+        <div class="species-card" id="speciesCard1">
+            <div class="species-card-inner">
+                <div class="species-card-front">
+                    <div class="species-card-hero" style="background: linear-gradient(135deg,#0c4a6e,#0369a1);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Chanidae_-_Chanos_chanos.JPG" class="species-card-image" alt="Bangus — Milkfish" />
+                        <div class="species-iucn-badge iucn-lc">LC — Least Concern</div>
+                        <div class="species-flag-badge">PH National Fish</div>
+                    </div>
+                    <div class="species-card-body">
+                        <div class="species-common-name">Bangus — Milkfish</div>
+                        <div class="species-sci-name">Chanos chanos</div>
+                        <div class="species-quick-stats">
+                            <span>Max 180 cm</span>
+                            <span>Up to 14 kg</span>
+                            <span>Depth: 1–30 m</span>
+                        </div>
+                        <p class="species-flip-hint">Hover / tap to learn more</p>
+                    </div>
+                </div>
+                <div class="species-card-back" style="background: linear-gradient(160deg,#0c4a6e,#1e3a5f);">
+                    <h4>About Bangus (Milkfish)</h4>
+                    <p>The national fish of the Philippines and top aquaculture species. Found in tropical waters from the Indian Ocean to the central Pacific. Key driver of the Philippine fisheries economy.</p>
+                    <ul class="species-facts-list">
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+                            Detected by FishTrack YOLOv8 at &gt;87% confidence in clear coastal water
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                            Spawning season: March–June; peaks April–May in Visayas
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></span>
+                            Diet: algae, diatoms, cyanobacteria (herbivorous)
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></span>
+                            Optimal temp: 25–32 °C; saline 10–32 ppt
+                        </li>
+                    </ul>
+                    <div class="species-citation">
+                        <strong>Citation:</strong> FAO. (2023). <em>Chanos chanos.</em> Cultured Aquatic Species Information Programme. Rome. DA-BFAR. (2023). <em>Philippine Milkfish Production Statistics.</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Lapu-lapu / Grouper -->
+        <div class="species-card" id="speciesCard2">
+            <div class="species-card-inner">
+                <div class="species-card-front">
+                    <div class="species-card-hero" style="background: linear-gradient(135deg,#7c2d12,#c2410c);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Brown_marbled_grouper_%28Epinephelus_fuscoguttatus%29_Lakshadweep.jpg" class="species-card-image" alt="Lapu-lapu — Tiger Grouper" />
+                        <div class="species-iucn-badge iucn-vu">VU — Vulnerable</div>
+                        <div class="species-flag-badge">Reef Species</div>
+                    </div>
+                    <div class="species-card-body">
+                        <div class="species-common-name">Lapu-lapu — Tiger Grouper</div>
+                        <div class="species-sci-name">Epinephelus fuscoguttatus</div>
+                        <div class="species-quick-stats">
+                            <span>Max 120 cm</span>
+                            <span>Up to 11 kg</span>
+                            <span>Depth: 1–60 m</span>
+                        </div>
+                        <p class="species-flip-hint">Hover / tap to learn more</p>
+                    </div>
+                </div>
+                <div class="species-card-back" style="background: linear-gradient(160deg,#7c2d12,#3d1a00);">
+                    <h4>About Lapu-lapu (Tiger Grouper)</h4>
+                    <p>A prized reef fish named after the Filipino hero who defeated Magellan in 1521. Critically important for Philippine artisanal fisheries and mariculture. Found on coral reefs of the Coral Triangle.</p>
+                    <ul class="species-facts-list">
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+                            Detected by FishTrack at reef zones; &gt;82% confidence in clear water
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                            Spawning: February–April; aggregates on reef edges
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></span>
+                            Diet: small fish, squid, crustaceans; ambush predator
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></span>
+                            Optimal temp: 26–30 °C; high-salinity reef waters
+                        </li>
+                    </ul>
+                    <div class="species-citation">
+                        <strong>Citation:</strong> Ma &amp; Craig. (2018). <em>Epinephelus fuscoguttatus.</em> IUCN Red List of Threatened Species. e.T132753A100540585. Froese &amp; Pauly, FishBase, 2024.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Galunggong / Round Scad -->
+        <div class="species-card" id="speciesCard3">
+            <div class="species-card-inner">
+                <div class="species-card-front">
+                    <div class="species-card-hero" style="background: linear-gradient(135deg,#1e3a5f,#1d4ed8);">
+                        <img src="https://thumbs.dreamstime.com/b/round-scad-26515839.jpg" class="species-card-image" alt="Galunggong — Round Scad" />
+                        <div class="species-iucn-badge iucn-lc">LC — Least Concern</div>
+                        <div class="species-flag-badge">Most Consumed</div>
+                    </div>
+                    <div class="species-card-body">
+                        <div class="species-common-name">Galunggong — Round Scad</div>
+                        <div class="species-sci-name">Decapterus macrosoma</div>
+                        <div class="species-quick-stats">
+                            <span>Max 40 cm</span>
+                            <span>Up to 0.8 kg</span>
+                            <span>Depth: 10–170 m</span>
+                        </div>
+                        <p class="species-flip-hint">Hover / tap to learn more</p>
+                    </div>
+                </div>
+                <div class="species-card-back" style="background: linear-gradient(160deg,#1e3a5f,#0f172a);">
+                    <h4>About Galunggong (Round Scad)</h4>
+                    <p>The most commonly consumed fish in the Philippines — often called the "poor man's fish." A pelagic schooling species fished by purse seine and ring net in Philippine waters. Critical to food security.</p>
+                    <ul class="species-facts-list">
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+                            Detected by FishTrack in open-water pelagic zones; school detection via sonar
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                            Spawning: Year-round; peaks February–May off Visayas
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></span>
+                            Diet: zooplankton, small crustaceans, fish larvae
+                        </li>
+                        <li>
+                            <span class="bullet-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg></span>
+                            Preferred temp: 24–30 °C; strong diel migration pattern
+                        </li>
+                    </ul>
+                    <div class="species-citation">
+                        <strong>Citation:</strong> Froese, R. &amp; Pauly, D. (2024). <em>Decapterus macrosoma.</em> FishBase. BFAR. (2023). <em>Fisheries Statistics of the Philippines 2022.</em> Quezon City: DA-BFAR.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Mobile swipe hint for species cards carousel -->
+    <p class="species-swipe-hint" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l3 3 3-3"/><path d="M19 15l3-3-3-3"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        Swipe to browse species · Tap a card to flip
+    </p>
+</div>
+
+<!-- ═══════════ 4. POPULATION TREND GRAPH ═══════════ -->
+<div class="edu-card-container" id="populationTrends">
+    <div class="edu-section-header">
+        <div class="edu-section-title-group">
+            <span class="edu-section-tag">BFAR Fisheries Data</span>
+            <h2 class="edu-section-title">Philippine Fish Stock Trends (2015–2024)</h2>
+            <p class="edu-section-subtitle">Relative production index (normalized to 2015 baseline) for the three FishTrack-monitored species, based on BFAR national fisheries production data.</p>
+        </div>
+    </div>
+    <div class="chart-container-wrapper">
+        <div class="chart-canvas-responsive">
+            <canvas id="populationChart"></canvas>
+        </div>
+    </div>
+    <div class="chart-citation-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span><strong>Sources:</strong> DA-BFAR. (2023). <em>Philippine Fisheries Statistics 2015–2022.</em> Quezon City: Bureau of Fisheries and Aquatic Resources. PSA. (2024). <em>Fisheries Situation Report.</em> Philippine Statistics Authority. Values are relative production index normalized to 2015 = 1.0. Galunggong data includes both commercial and municipal sectors.</span>
+    </div>
+</div>
+
+<!-- ═══════════ 5. ECOSYSTEM DIAGRAM ═══════════ -->
+<div class="edu-card-container" id="ecosystemDiagram">
+    <div class="edu-section-header">
+        <div class="edu-section-title-group">
+            <span class="edu-section-tag">Marine Ecology</span>
+            <h2 class="edu-section-title">Philippine Coral Reef Food Web &amp; Trophic Relationships</h2>
+            <p class="edu-section-subtitle">Simplified trophic diagram of the Philippine Coral Triangle reef ecosystem. Arrows show energy flow (prey to predator). FishTrack-monitored species are highlighted with dashed borders.</p>
+        </div>
+    </div>
+
+    <div class="ecosystem-diagram-wrapper">
+        <svg id="ecosystemSVG" viewBox="0 0 900 530" xmlns="http://www.w3.org/2000/svg" class="ecosystem-svg">
+            <defs>
+                <marker id="arrow"       markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="var(--eco-text-muted)"/></marker>
+                <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#10b981"/></marker>
+                <marker id="arrow-blue"  markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#0ea5e9"/></marker>
+                <marker id="arrow-amber" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b"/></marker>
+                <marker id="arrow-violet" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#a78bfa"/></marker>
+                <radialGradient id="bgGrad2" cx="50%" cy="50%" r="70%">
+                    <stop offset="0%" stop-color="var(--eco-bg-start)" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="var(--eco-bg-end)" stop-opacity="1"/>
+                </radialGradient>
+
+                <!-- ══ Reusable species icons scaled to 24x24 ══ -->
+                <!-- Tuna (Tambakol) -->
+                <symbol id="icon-tuna" viewBox="0 0 24 24">
+                    <path d="M 6,12 C 8,7 13,5 18,7 C 20,8.2 21.5,10 21.5,12 C 21.5,14 20,15.8 18,17 C 13,19 8,17 6,12 Z" />
+                    <path d="M 7,12 C 5,10 3.5,6.5 2,4.5 C 3,8.5 3.5,15.5 2,19.5 C 3.5,17.5 5,14 7,12 Z" />
+                    <path d="M 11.5,6.5 C 13,3 15,2.5 16,5.5" />
+                    <path d="M 12.5,12 C 14.5,14 16,14.5 16.5,13.5" />
+                    <circle cx="19" cy="11" r="1" fill="currentColor" stroke="none" />
+                </symbol>
+
+                <!-- Grouper (Lapu-lapu) -->
+                <symbol id="icon-grouper" viewBox="0 0 24 24">
+                    <path d="M 7,12 C 9,8.5 13,6.5 17,8 C 19.5,9 21.5,10.5 21.5,12.5 C 21.5,14 19.5,15.5 17,16 C 13,17.5 9,15.5 7,12 Z" />
+                    <path d="M 8,12 C 5,9.5 3,9 3,12 C 3,15 5,14.5 8,12 Z" />
+                    <path d="M 10,7.5 C 12.5,5 15.5,5 17.5,7.5" />
+                    <path d="M 11.5,7 V 5.5 M 13.5,6.5 V 4.5 M 15.5,6.5 V 5" />
+                    <path d="M 12,12.5 C 14,14 15.5,14.5 16,13.5" />
+                    <circle cx="19" cy="11" r="1.1" fill="currentColor" stroke="none" />
+                </symbol>
+
+                <!-- Mackerel (Tanigue) -->
+                <symbol id="icon-mackerel" viewBox="0 0 24 24">
+                    <path d="M 6,12 C 9,9.5 14,9 18,9.8 C 20,10.2 22,11.2 22,12 C 22,12.8 20,13.8 18,14.2 C 14,15 9,14.5 6,12 Z" />
+                    <path d="M 7,12 L 2,7 M 2,7 C 3.2,9.5 3.5,11 4.5,12 C 3.5,13 3.2,14.5 2,17 M 7,12 L 2,17" />
+                    <path d="M 12.5,9.5 C 14,7.5 15.5,7.5 16,9.5" />
+                    <circle cx="20" cy="11.2" r="0.8" fill="currentColor" stroke="none" />
+                </symbol>
+
+                <!-- Scad (Galunggong) -->
+                <symbol id="icon-scad" viewBox="0 0 24 24">
+                    <path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z" />
+                    <path d="M18 12v.5" />
+                    <path d="M16 17.93a9.77 9.77 0 0 1 0-11.86" />
+                    <path d="M7.5 11.5C7.5 9 5.58 6.97 2.73 6.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 19.03 7.5 17 7.5 14.33" />
+                </symbol>
+
+                <!-- Milkfish (Bangus) -->
+                <symbol id="icon-milkfish" viewBox="0 0 24 24">
+                    <path d="M 6,12 C 8.5,9 13.5,8 17.5,8 C 19.5,9 21.5,10.5 21.5,12 C 21.5,13.5 19.5,15 17.5,16 C 13.5,16 8.5,15 6,12 Z" />
+                    <path d="M 7.5,12 L 2,4 M 2,4 C 3.5,8.5 4,10.5 5,12 C 4,13.5 3.5,15.5 2,20 M 7.5,12 L 2,20" />
+                    <path d="M 13,8 C 14.5,6.5 15.5,6.5 16,8" />
+                    <circle cx="19.5" cy="11" r="0.9" fill="currentColor" stroke="none" />
+                </symbol>
+
+                <!-- Squid (Pusit) -->
+                <symbol id="icon-squid" viewBox="0 0 24 24">
+                    <path d="M12 2 C9 2 8 8 8 13 C8 14.5 9.5 15.5 12 15.5 C14.5 15.5 16 14.5 16 13 C16 8 15 2 12 2 Z" />
+                    <path d="M8 6 C5 6 4 8 8 10" />
+                    <path d="M16 6 C19 6 20 8 16 10" />
+                    <circle cx="10" cy="12" r="1" fill="currentColor" stroke="none" />
+                    <circle cx="14" cy="12" r="1" fill="currentColor" stroke="none" />
+                    <path d="M9 16 C8 19 11 20 10 22.5" />
+                    <path d="M11 16 C11 19 13 21 12.5 22.5" />
+                    <path d="M13 16 C13 19 11 21 11.5 22.5" />
+                    <path d="M15 16 C16 19 13 20 14 22.5" />
+                </symbol>
+
+                <!-- Shrimp (Sugpo) -->
+                <symbol id="icon-prawn" viewBox="0 0 24 24">
+                    <path d="M11 12h.01" />
+                    <path d="M13 22c.5-.5 1.12-1 2.5-1-1.38 0-2-.5-2.5-1" />
+                    <path d="M14 2a3.28 3.28 0 0 1-3.227 1.798l-6.17-.561A2.387 2.387 0 1 0 4.387 8H15.5a1 1 0 0 1 0 13 1 1 0 0 0 0-5H12a7 7 0 0 1-7-7V8" />
+                    <path d="M14 8a8.5 8.5 0 0 1 0 8" />
+                    <path d="M16 16c2 0 4.5-4 4-6" />
+                </symbol>
+
+                <!-- Crab (Talangka) -->
+                <symbol id="icon-crab" viewBox="0 0 24 24">
+                    <path d="M7.5 14A6 6 0 1 1 10 2.36L8 5l2 2S7 8 2 8" />
+                    <path d="M16.5 14A6 6 0 1 0 14 2.36L16 5l-2 2s3 1 8 1" />
+                    <path d="M10 13v-2" />
+                    <path d="M14 13v-2" />
+                    <ellipse cx="12" cy="17.5" rx="7" ry="4.5" />
+                    <path d="M2 16c2 0 3 1 3 1" />
+                    <path d="M2 22c0-1.7 1.3-3 3-3" />
+                    <path d="M19 17s1-1 3-1" />
+                    <path d="M19 19c1.7 0 3 1.3 3 3" />
+                </symbol>
+
+                <!-- Phytoplankton -->
+                <symbol id="icon-phytoplankton" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5" />
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="3" x2="12" y2="1" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="3" y1="12" x2="1" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="5.64" y1="5.64" x2="4.22" y2="4.22" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="5.64" y1="18.36" x2="4.22" y2="19.78" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </symbol>
+
+                <!-- Zooplankton -->
+                <symbol id="icon-zooplankton" viewBox="0 0 24 24">
+                    <path d="M12 5 C9 5 8 8 8 12 C8 15 10 16 12 16 C14 16 16 15 16 12 C16 8 15 5 12 5 Z" />
+                    <path d="M10 6 C6 3 4 5 3 9" />
+                    <path d="M14 6 C18 3 20 5 21 9" />
+                    <path d="M12 16 L12 20" />
+                    <path d="M10 18 L14 18" />
+                    <path d="M11 20 L13 20" />
+                    <path d="M9 23 L12 20 L15 23" />
+                </symbol>
+
+                <!-- Seagrass / Algae -->
+                <symbol id="icon-seagrass" viewBox="0 0 24 24">
+                    <path d="M 3,22 C 12,22 12,22 21,22" />
+                    <path d="M 7,22 C 5,15 11,9 8,2" />
+                    <path d="M 12,22 C 15,13 9,7 12,2" />
+                    <path d="M 17,22 C 15,15 20,9 17,3" />
+                </symbol>
+            </defs>
+
+            <!-- Background -->
+            <rect width="900" height="530" fill="url(#bgGrad2)" rx="14"/>
+
+            <!-- Title -->
+            <text x="450" y="22" text-anchor="middle" font-size="11" fill="var(--eco-text)" font-family="Inter,sans-serif" font-weight="700" letter-spacing="0.12em">PHILIPPINE CORAL TRIANGLE — TROPHIC FLOW DIAGRAM</text>
+
+            <!-- Trophic level bands with labels -->
+            <!-- APEX L5: y 30–115 -->
+            <rect x="0" y="30" width="900" height="88" fill="var(--eco-level-bg-5)" rx="0"/>
+            <text x="14" y="80" font-size="9" fill="var(--eco-level-text-5)" font-family="Inter,sans-serif" font-weight="800" letter-spacing="0.12em">APEX L5</text>
+
+            <!-- LEVEL 4: y 118–205 -->
+            <rect x="0" y="118" width="900" height="90" fill="var(--eco-level-bg-4)" rx="0"/>
+            <text x="14" y="168" font-size="9" fill="var(--eco-level-text-4)" font-family="Inter,sans-serif" font-weight="800" letter-spacing="0.12em">LEVEL 4</text>
+
+            <!-- LEVEL 3: y 208–295 -->
+            <rect x="0" y="208" width="900" height="90" fill="var(--eco-level-bg-3)" rx="0"/>
+            <text x="14" y="258" font-size="9" fill="var(--eco-level-text-3)" font-family="Inter,sans-serif" font-weight="800" letter-spacing="0.12em">LEVEL 3</text>
+
+            <!-- LEVEL 2: y 298–385 -->
+            <rect x="0" y="298" width="900" height="90" fill="var(--eco-level-bg-2)" rx="0"/>
+            <text x="14" y="348" font-size="9" fill="var(--eco-level-text-2)" font-family="Inter,sans-serif" font-weight="800" letter-spacing="0.12em">LEVEL 2</text>
+
+            <!-- PRODUCERS: y 388–520 -->
+            <rect x="0" y="388" width="900" height="132" fill="var(--eco-level-bg-1)" rx="0"/>
+            <text x="14" y="458" font-size="9" fill="var(--eco-level-text-1)" font-family="Inter,sans-serif" font-weight="800" letter-spacing="0.12em">PRODUCERS</text>
+
+            <!-- ══════════════════════════════════════
+                 ENERGY FLOW ARROWS (drawn first, under nodes)
+                 ══════════════════════════════════════ -->
+
+            <!-- Producers → Level 3 -->
+            <!-- Phytoplankton(210,450) → Galunggong(185,253) -->
+            <line x1="210" y1="423" x2="188" y2="282" stroke="#10b981" stroke-width="1.7" marker-end="url(#arrow-green)" opacity="0.7"/>
+            <!-- Phytoplankton(210,450) → Bangus(450,253) -->
+            <path d="M 222,424 Q 280,380 427,282" fill="none" stroke="#10b981" stroke-width="1.7" marker-end="url(#arrow-green)" opacity="0.65"/>
+            <!-- Zooplankton(450,450) → Galunggong(185,253) -->
+            <path d="M 425,424 Q 300,380 207,282" fill="none" stroke="#10b981" stroke-width="1.6" marker-end="url(#arrow-green)" opacity="0.65"/>
+            <!-- Zooplankton(450,450) → Pusit(720,253) -->
+            <path d="M 468,424 Q 590,380 698,282" fill="none" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)" opacity="0.6"/>
+            <!-- Seagrass(680,450) → Bangus(450,253) -->
+            <path d="M 660,424 Q 620,380 472,282" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#arrow)" opacity="0.5"/>
+
+            <!-- Producers → Level 2 -->
+            <!-- Zooplankton(450,450) → Sugpo(330,343) -->
+            <line x1="440" y1="425" x2="345" y2="370" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrow-green)" opacity="0.65"/>
+
+            <!-- Level 2 → Level 3 -->
+            <!-- Sugpo(330,343) → Galunggong(185,253) -->
+            <line x1="306" y1="320" x2="208" y2="282" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#arrow-amber)" opacity="0.85"/>
+            <!-- Sugpo(330,343) → Lapu-lapu(250,163) -->
+            <line x1="320" y1="316" x2="258" y2="193" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#arrow-amber)" opacity="0.85"/>
+            <!-- Talangka(580,343) → Lapu-lapu(250,163) -->
+            <path d="M 554,318 Q 400,290 272,192" fill="none" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.65"/>
+
+            <!-- Level 3 → Level 4 -->
+            <!-- Galunggong(185,253) → Lapu-lapu(250,163) -->
+            <line x1="193" y1="224" x2="238" y2="193" stroke="#60a5fa" stroke-width="1.8" marker-end="url(#arrow-blue)" opacity="0.8"/>
+            <!-- Galunggong(185,253) → Tanigue(660,163) -->
+            <path d="M 213,226 Q 424,180 635,192" fill="none" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#arrow-blue)" opacity="0.5"/>
+            <!-- Bangus(450,253) → Tambakol(450,75) — skip to apex -->
+            <line x1="450" y1="224" x2="450" y2="112" stroke="#38bdf8" stroke-width="1.9" marker-end="url(#arrow-blue)" opacity="0.75"/>
+
+            <!-- ══ APEX: Tambakol (Yellowfin Tuna) — x=450, y=75 ══ -->
+            <g class="eco-node" data-species="tambakol" transform="translate(450,75)">
+                <circle r="36" fill="#0c4a6e" stroke="#0ea5e9" stroke-width="2.5"/>
+                <!-- Tuna icon -->
+                <use href="#icon-tuna" x="-19" y="-19" width="38" height="38" fill="none" stroke="#7dd3fc" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ L4: Lapu-lapu (Grouper) — FishTrack — x=250, y=163 ══ -->
+            <g class="eco-node eco-tracked" data-species="lapulapu" transform="translate(250,163)">
+                <circle r="34" fill="#7c2d12" stroke="#f97316" stroke-width="2.5" stroke-dasharray="6,3"/>
+                <!-- Grouper icon -->
+                <use href="#icon-grouper" x="-18" y="-18" width="36" height="36" fill="none" stroke="#fed7aa" stroke-width="1.20" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ L4: Tanigue (Spanish Mackerel) — x=660, y=163 ══ -->
+            <g class="eco-node" data-species="tanigue" transform="translate(660,163)">
+                <circle r="32" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+                <!-- Mackerel icon -->
+                <use href="#icon-mackerel" x="-17" y="-17" width="34" height="34" fill="none" stroke="#6ee7b7" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ L3: Galunggong (Round Scad) — FishTrack — x=185, y=253 ══ -->
+            <g class="eco-node eco-tracked" data-species="galunggong" transform="translate(185,253)">
+                <circle r="32" fill="#1e3a5f" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="6,3"/>
+                <!-- Round Scad icon -->
+                <use href="#icon-scad" x="-17" y="-17" width="34" height="34" fill="none" stroke="#93c5fd" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ L3: Bangus (Milkfish) — FishTrack — x=450, y=253 ══ -->
+            <g class="eco-node eco-tracked" data-species="bangus" transform="translate(450,253)">
+                <circle r="32" fill="#1e3a5f" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6,3"/>
+                <!-- Milkfish icon -->
+                <use href="#icon-milkfish" x="-17" y="-17" width="34" height="34" fill="none" stroke="#7dd3fc" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ L3: Pusit (Squid) — x=720, y=253 ══ -->
+            <g class="eco-node" data-species="pusit" transform="translate(720,253)">
+                <circle r="30" fill="#2e1065" stroke="#a78bfa" stroke-width="2"/>
+                <!-- Squid icon -->
+                <use href="#icon-squid" x="-16" y="-16" width="32" height="32" fill="none" stroke="#c4b5fd" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ L2: Sugpo (Tiger Prawn) — x=330, y=343 ══ -->
+            <g class="eco-node" data-species="sugpo" transform="translate(330,343)">
+                <circle r="30" fill="#451a03" stroke="#f59e0b" stroke-width="2"/>
+                <!-- Prawn icon -->
+                <use href="#icon-prawn" x="-16" y="-16" width="32" height="32" fill="none" stroke="#fcd34d" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ L2: Talangka (Mud Crab) — x=580, y=343 ══ -->
+            <g class="eco-node" data-species="talangka" transform="translate(580,343)">
+                <circle r="30" fill="#1e1b4b" stroke="#818cf8" stroke-width="2"/>
+                <!-- Crab icon -->
+                <use href="#icon-crab" x="-16" y="-16" width="32" height="32" fill="none" stroke="#a5b4fc" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ PRODUCERS ══ -->
+
+            <!-- Phytoplankton — x=210, y=450 -->
+            <g class="eco-node" data-species="phytoplankton" transform="translate(210,450)">
+                <circle r="26" fill="#14532d" stroke="#4ade80" stroke-width="2"/>
+                <!-- Phytoplankton icon -->
+                <use href="#icon-phytoplankton" x="-14" y="-14" width="28" height="28" fill="none" stroke="#4ade80" stroke-width="1.50" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- Zooplankton — x=450, y=450 -->
+            <g class="eco-node" data-species="zooplankton" transform="translate(450,450)">
+                <circle r="26" fill="#14532d" stroke="#4ade80" stroke-width="2"/>
+                <!-- Zooplankton icon -->
+                <use href="#icon-zooplankton" x="-14" y="-14" width="28" height="28" fill="none" stroke="#4ade80" stroke-width="1.50" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- Seagrass / Algae — x=680, y=450 -->
+            <g class="eco-node" data-species="seagrass" transform="translate(680,450)">
+                <circle r="26" fill="#1c1917" stroke="#78716c" stroke-width="2"/>
+                <!-- Seagrass icon -->
+                <use href="#icon-seagrass" x="-14" y="-14" width="28" height="28" fill="none" stroke="#4ade80" stroke-width="1.50" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+
+            <!-- ══ LEGEND ══ -->
+            <rect x="655" y="35" width="230" height="82" rx="9" fill="var(--eco-legend-bg)" stroke="var(--eco-legend-border)" stroke-width="1"/>
+            <circle cx="676" cy="56" r="7" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="4,2"/>
+            <text x="690" y="60" font-size="10" fill="var(--eco-text)" font-family="Inter,sans-serif">FishTrack Monitored Species</text>
+            <line x1="672" y1="78" x2="688" y2="78" stroke="#10b981" stroke-width="2.2" marker-end="url(#arrow-green)"/>
+            <text x="696" y="82" font-size="10" fill="var(--eco-text)" font-family="Inter,sans-serif">Energy Flow (Prey → Predator)</text>
+            <text x="672" y="106" font-size="9" fill="var(--eco-text-muted)" font-family="Inter,sans-serif">Sources: Froese &amp; Pauly 2024; DA-BFAR 2023</text>
+        </svg>
+    </div>
+    <div class="chart-citation-bar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span><strong>Sources:</strong> Froese, R. &amp; Pauly, D. (2024). FishBase; DA-BFAR. (2023). <em>Philippine Coral Reef Fisheries Assessment.</em> Quezon City; Trophic levels from Ecopath with Ecosim — Sulu Sea model (Opitz, 1996; Aliño et al., 2002). Coral Triangle Initiative on Coral Reefs, Fisheries, and Food Security (CTI-CFF), 2023.</span>
+    </div>
+</div>
+
+<!-- ═══════════ 6. LoRa EXPLAINER + BUOY PIPELINE ═══════════ -->
+
+<!-- RSSI Quality Guide -->
+<div class="edu-card-container" id="loraExplainer">
+    <div class="edu-section-header" style="margin-bottom:1rem;">
+        <div class="edu-section-title-group">
+            <span class="edu-section-tag">Radio Technology</span>
+            <h2 class="edu-section-title" style="font-size:1.35rem;">RSSI Signal Quality Guide</h2>
+        </div>
+    </div>
+    <div class="chart-container-wrapper">
+        <div class="chart-canvas-rssi">
+            <canvas id="rssiGuideChart"></canvas>
+        </div>
+    </div>
+    <div class="lora-quality-bands">
+        <div class="quality-band excellent">
+            <span class="band-dot"></span>
+            <div>
+                <strong>Excellent (−50 to −70 dBm)</strong>
+                <p>Full signal strength. Ideal for high-frequency telemetry bursts across Philippine coastal waters.</p>
+            </div>
+        </div>
+        <div class="quality-band good">
+            <span class="band-dot"></span>
+            <div>
+                <strong>Good (−70 to −90 dBm)</strong>
+                <p>Reliable for standard data rates. Most Coral Triangle buoy deployments fall in this range.</p>
+            </div>
+        </div>
+        <div class="quality-band fair">
+            <span class="band-dot"></span>
+            <div>
+                <strong>Fair (−90 to −105 dBm)</strong>
+                <p>Occasional packet loss due to wave interference. Reduce spreading factor for better sensitivity.</p>
+            </div>
+        </div>
+        <div class="quality-band poor">
+            <span class="band-dot"></span>
+            <div>
+                <strong>Poor (&lt;−105 dBm)</strong>
+                <p>High loss rate. Increase Spreading Factor to SF12 or reposition buoy to reduce obstructions.</p>
+            </div>
+        </div>
+    </div>
+    <div class="chart-citation-bar" style="margin-top:1rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span>Semtech AN1200.22 LoRa Modulation Basics; ITU-R P.1546 Propagation Model for Maritime Use</span>
+    </div>
+</div>
+
+<!-- Buoy Data Pipeline -->
+<div class="edu-card-container" id="loraHowItWorks">
+    <div class="edu-section-header" style="margin-bottom:1rem;">
+        <div class="edu-section-title-group">
+            <span class="edu-section-tag">System Architecture</span>
+            <h2 class="edu-section-title" style="font-size:1.35rem;">How FishTrack Buoys Work</h2>
+        </div>
+    </div>
+    <div class="buoy-pipeline">
+
+        <div class="pipeline-step" style="--clr:#f59e0b;">
+            <div class="pipeline-icon">
+                <!-- Sun icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            </div>
+            <div class="pipeline-label">Solar Harvest</div>
+            <div class="pipeline-desc">10W panel charges LiFePO4 battery via MPPT. 5.1 kWh/m²/day average PH irradiance.</div>
+        </div>
+
+        <div class="pipeline-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+
+        <div class="pipeline-step" style="--clr:#0ea5e9;">
+            <div class="pipeline-icon">
+                <!-- Sensor / radar icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3m0 14v3M4.93 4.93l2.12 2.12m9.9 9.9l2.12 2.12M2 12h3m14 0h3M4.93 19.07l2.12-2.12m9.9-9.9l2.12-2.12"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <div class="pipeline-label">Sensor Sweep</div>
+            <div class="pipeline-desc">200 kHz sonar + YOLOv8 camera scan + GPS NMEA fix captured simultaneously.</div>
+        </div>
+
+        <div class="pipeline-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+
+        <div class="pipeline-step" style="--clr:#8b5cf6;">
+            <div class="pipeline-icon">
+                <!-- Radio waves / LoRa icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            </div>
+            <div class="pipeline-label">LoRa Encode</div>
+            <div class="pipeline-desc">Payload packed into binary frame (max 255 bytes). SF7–SF12 adaptive spreading.</div>
+        </div>
+
+        <div class="pipeline-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+
+        <div class="pipeline-step" style="--clr:#10b981;">
+            <div class="pipeline-icon">
+                <!-- Network share / mesh icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </div>
+            <div class="pipeline-label">Mesh Relay</div>
+            <div class="pipeline-desc">Multi-hop routing via peer buoy nodes. Duplicate frames dropped by sequence ID check.</div>
+        </div>
+
+        <div class="pipeline-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+
+        <div class="pipeline-step" style="--clr:#ef4444;">
+            <div class="pipeline-icon">
+                <!-- Monitor / base station icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="pipeline-label">Base Station</div>
+            <div class="pipeline-desc">Pico USB gateway delivers frame to Flask server. Decoded and stored for dashboard display.</div>
+        </div>
+
+    </div>
+    <div class="lora-tech-specs">
+        <div class="tech-spec-item">
+            <div class="tech-spec-label">Frequency</div>
+            <div class="tech-spec-val">915 MHz (ISM)</div>
+        </div>
+        <div class="tech-spec-item">
+            <div class="tech-spec-label">Range (Open Sea)</div>
+            <div class="tech-spec-val">Up to 15 km</div>
+        </div>
+        <div class="tech-spec-item">
+            <div class="tech-spec-label">Tx Power</div>
+            <div class="tech-spec-val">20 dBm</div>
+        </div>
+        <div class="tech-spec-item">
+            <div class="tech-spec-label">Sensitivity</div>
+            <div class="tech-spec-val">−148 dBm</div>
+        </div>
+        <div class="tech-spec-item">
+            <div class="tech-spec-label">Duty Cycle</div>
+            <div class="tech-spec-val">&lt; 1%</div>
+        </div>
+        <div class="tech-spec-item">
+            <div class="tech-spec-label">Payload Size</div>
+            <div class="tech-spec-val">Max 255 bytes</div>
+        </div>
+    </div>
+
+    <!-- Payload Byte Map -->
+    <div class="arch-subsection">
+        <div class="arch-subsection-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <span>LoRa Payload Frame Map (255 bytes max)</span>
+        </div>
+        <div class="arch-payload-grid">
+            <div class="payload-field" style="--pclr:#f59e0b; flex:1.5;">
+                <div class="payload-bytes">Bytes 0–3</div>
+                <div class="payload-name">Node ID</div>
+                <div class="payload-detail">4-byte unique buoy codename hash</div>
+            </div>
+            <div class="payload-field" style="--pclr:#0ea5e9; flex:2;">
+                <div class="payload-bytes">Bytes 4–11</div>
+                <div class="payload-name">GPS Fix</div>
+                <div class="payload-detail">Lat/Lon as IEEE 754 float32 × 2</div>
+            </div>
+            <div class="payload-field" style="--pclr:#10b981; flex:1;">
+                <div class="payload-bytes">Bytes 12–13</div>
+                <div class="payload-name">Battery</div>
+                <div class="payload-detail">mV as uint16</div>
+            </div>
+            <div class="payload-field" style="--pclr:#8b5cf6; flex:2.5;">
+                <div class="payload-bytes">Bytes 14–29</div>
+                <div class="payload-name">Sonar Echo</div>
+                <div class="payload-detail">8 depth bins × int16 (echo amplitude)</div>
+            </div>
+            <div class="payload-field" style="--pclr:#ef4444; flex:1.5;">
+                <div class="payload-bytes">Bytes 30–33</div>
+                <div class="payload-name">Detection</div>
+                <div class="payload-detail">YOLOv8 class + confidence uint8 × 4</div>
+            </div>
+            <div class="payload-field" style="--pclr:#64748b; flex:1;">
+                <div class="payload-bytes">Byte 34</div>
+                <div class="payload-name">Seq ID</div>
+                <div class="payload-detail">Duplicate-drop counter</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deployment Checklist -->
+    <div class="arch-subsection">
+        <div class="arch-subsection-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Pre-Deployment Checklist</span>
+        </div>
+        <div class="arch-checklist">
+            <div class="checklist-col">
+                <div class="checklist-item checklist-hardware">
+                    <span class="checklist-dot"></span>
+                    <div>
+                        <strong>Battery &gt; 80% SoC</strong>
+                        <p>Verify LiFePO4 cell voltage ≥ 13.0V before anchor drop.</p>
+                    </div>
+                </div>
+                <div class="checklist-item checklist-hardware">
+                    <span class="checklist-dot"></span>
+                    <div>
+                        <strong>GPS Cold Fix Acquired</strong>
+                        <p>Wait for u-blox NEO lock indicator (≥ 4 satellites) before deployment.</p>
+                    </div>
+                </div>
+                <div class="checklist-item checklist-hardware">
+                    <span class="checklist-dot"></span>
+                    <div>
+                        <strong>Sonar Self-Test Pass</strong>
+                        <p>Run sonar ping at 200 kHz; confirm echo return within 200 ms.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="checklist-col">
+                <div class="checklist-item checklist-software">
+                    <span class="checklist-dot"></span>
+                    <div>
+                        <strong>LoRa Link Test ≥ −90 dBm</strong>
+                        <p>Ping base station from deployment site; confirm RSSI in Good range.</p>
+                    </div>
+                </div>
+                <div class="checklist-item checklist-software">
+                    <span class="checklist-dot"></span>
+                    <div>
+                        <strong>Sequence ID Reset to 0</strong>
+                        <p>Clear duplicate-drop counter before each new deployment session.</p>
+                    </div>
+                </div>
+                <div class="checklist-item checklist-software">
+                    <span class="checklist-dot"></span>
+                    <div>
+                        <strong>Dashboard Neighbor Visible</strong>
+                        <p>Confirm buoy codename appears in Connected Buoys table within 30 s.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-citation-bar" style="margin-top:0.75rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span><strong>Sources:</strong> Semtech SX1276 Datasheet Rev 7; Raspberry Pi Zero 2W Product Brief; u-blox NEO-M8N Data Sheet; MPPT Solar Charge Controller Application Note — EPsolar.</span>
+    </div>
+</div>
+
+
+<!-- ═══════════ 7. EDUCATIONAL VIDEO GALLERY ═══════════ -->
+<div class="edu-card-container" id="videoGallery">
+    <div class="edu-section-header">
+        <div class="edu-section-title-group">
+            <span class="edu-section-tag">Video Library</span>
+            <h2 class="edu-section-title">Philippine Marine Educational Videos</h2>
+            <p class="edu-section-subtitle">Curated documentary and science videos on Philippine marine biodiversity, fisheries technology, and the Coral Triangle ecosystem that FishTrack monitors.</p>
+        </div>
+    </div>
+    <div class="video-grid">
+
+        <div class="video-card">
+            <div class="video-thumb-wrapper">
+                <iframe src="https://www.youtube.com/embed/t6DxO8BRYYQ"
+                    title="Nature's Greatest Secret - The Coral Triangle Full Documentary"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="video-card-body">
+                <span class="video-tag">Coral Triangle</span>
+                <h4>Nature's Greatest Secret — The Coral Triangle</h4>
+                <p>A full documentary episode exploring the Coral Triangle's unrivalled richness — the volcanic Indo-Pacific region spanning the Philippines where over 3,200 fish species share reefs, seagrass beds, and open pelagic waters.</p>
+                <div class="video-source">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    Nature Documentary / YouTube
+                </div>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-thumb-wrapper">
+                <iframe src="https://www.youtube.com/embed/AqqaYs7LjlM"
+                    title="How Sonar Works - Smarter Every Day 249"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="video-card-body">
+                <span class="video-tag">Sonar &amp; Acoustics</span>
+                <h4>How Sonar Works — Submarine Shadow Zone</h4>
+                <p>The physics of acoustic echo ranging explained in depth — how sound waves propagate through water, bounce off schools of fish, and return echoes used to estimate biomass depth profiles like FishTrack's sonar system.</p>
+                <div class="video-source">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    SmarterEveryDay / YouTube
+                </div>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-thumb-wrapper">
+                <iframe src="https://www.youtube.com/embed/hMOwbNUpDQA"
+                    title="LoRa LoRaWAN De-Mystified Tutorial by Andreas Spiess"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="video-card-body">
+                <span class="video-tag">LoRa Technology</span>
+                <h4>LoRa &amp; LoRaWAN De-Mystified / Tutorial</h4>
+                <p>A deep technical breakdown of Long Range radio by Andreas Spiess — chirp spread spectrum, spreading factors SF7–SF12, link budget, bandwidth, and why LoRa is the ideal technology for remote Philippine archipelago fisheries monitoring.</p>
+                <div class="video-source">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    Andreas Spiess / YouTube
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ═══════════ 8. OCEAN DEPTH ZONES ═══════════ -->
+<div class="edu-card-container" id="depthZones">
+    <div class="edu-section-header">
+        <div class="edu-section-title-group">
+            <span class="edu-section-tag">Philippine Oceanography</span>
+            <h2 class="edu-section-title">Philippine Sea Depth Zones &amp; Species Habitats</h2>
+            <p class="edu-section-subtitle">Understanding which depth zone each species occupies helps operators configure FishTrack sonar sweep ranges and interpret buoy camera detection data accurately.</p>
+        </div>
+    </div>
+
+    <div class="depth-zone-diagram">
+
+        <div class="depth-zone" style="--depth-color: #0ea5e9; --depth-bg: rgba(14,165,233,0.07);">
+            <div class="depth-zone-header">
+                <div class="depth-zone-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C5.8 7 7 5.6 8.5 5.6c1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/><path d="M2 12c.6.5 1.2 1 2.5 1 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1.4 4-1.4 1.5 0 2.7 1.4 4 1.4 1.3 0 2.5-1 3-1.5"/></svg>
+                </div>
+                <span class="depth-range">0 – 200 m</span>
+                <span class="depth-name">Epipelagic — Sunlight Zone (Coral Triangle)</span>
+            </div>
+            <div class="depth-zone-body">
+                <div class="depth-species-chips">
+                    <span class="depth-chip tracked">Bangus — Chanos chanos (1–30 m)</span>
+                    <span class="depth-chip tracked">Lapu-lapu — E. fuscoguttatus (1–60 m)</span>
+                    <span class="depth-chip tracked">Galunggong — D. macrosoma (10–170 m)</span>
+                    <span class="depth-chip">Tambakol — Yellowfin Tuna (0–200 m)</span>
+                    <span class="depth-chip">Sugpo — P. monodon (0–40 m)</span>
+                </div>
+                <p class="depth-fact">FishTrack sonar operates in this zone. The Philippine Coral Triangle epipelagic layer supports over 1,700 reef fish species and is the primary zone for commercial and municipal fisheries production, contributing over 3.9 million MT annually to the national catch. <em>[DA-BFAR, 2023]</em></p>
+            </div>
+        </div>
+
+        <div class="depth-zone" style="--depth-color: #3b82f6; --depth-bg: rgba(59,130,246,0.05);">
+            <div class="depth-zone-header">
+                <div class="depth-zone-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+                </div>
+                <span class="depth-range">200 – 1,000 m</span>
+                <span class="depth-name">Mesopelagic — Twilight Zone (Philippine Sea)</span>
+            </div>
+            <div class="depth-zone-body">
+                <div class="depth-species-chips">
+                    <span class="depth-chip">Deep-water Squid spp.</span>
+                    <span class="depth-chip">Myctophidae (Lanternfish)</span>
+                    <span class="depth-chip">Alepisaurus (Lancetfish)</span>
+                    <span class="depth-chip">Sternoptychidae (Hatchetfish)</span>
+                </div>
+                <p class="depth-fact">Diel vertical migration (DVM) occurs here in Philippine waters — mesopelagic organisms ascend to the epipelagic zone each night to feed. This layer is largely unexplored in Philippine fisheries science. Beyond FishTrack's current sonar operational range. <em>[SEAFDEC/AQD, 2022]</em></p>
+            </div>
+        </div>
+
+        <div class="depth-zone" style="--depth-color: #6366f1; --depth-bg: rgba(99,102,241,0.05);">
+            <div class="depth-zone-header">
+                <div class="depth-zone-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </div>
+                <span class="depth-range">6,000 – 10,540 m</span>
+                <span class="depth-name">Hadal Zone — Philippine Trench (Galathea Depth)</span>
+            </div>
+            <div class="depth-zone-body">
+                <div class="depth-species-chips">
+                    <span class="depth-chip">Amphipoda (Deep-sea Crustaceans)</span>
+                    <span class="depth-chip">Holothuroidea (Sea Cucumbers)</span>
+                    <span class="depth-chip">Polychaeta (Bristle Worms)</span>
+                    <span class="depth-chip">Snailfish (Liparidae)</span>
+                </div>
+                <p class="depth-fact">The Philippine Trench reaches 10,540 m — one of the deepest points on Earth, located in the Philippine Sea east of Mindanao. Pressure exceeds 1,000 atmospheres. First explored in 1951 by the Danish vessel <em>Galathea.</em> FishTrack buoys are not designed for these extreme depths. <em>[MBARI Philippine Trench Expedition, 2021; Scripps Institution of Oceanography]</em></p>
+            </div>
+        </div>
+
+    </div>
+    <div class="chart-citation-bar" style="margin-top:0.75rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span><strong>Sources:</strong> NOAA Ocean Explorer — Ocean Zones; FishBase species depth profiles (Froese &amp; Pauly, 2024); SEAFDEC Aquaculture Department. (2022). <em>Philippine Waters Marine Resources Assessment.</em> Iloilo: SEAFDEC/AQD. Depth of Philippine Trench from MBARI (2021).</span>
+    </div>
+</div>
+
+<!-- Interactive Species Details Modal -->
+<div id="speciesModal" class="eco-modal-backdrop">
+    <div class="eco-modal-content">
+        <button class="eco-modal-close" id="closeSpeciesModal" aria-label="Close modal">&times;</button>
+        <div class="eco-modal-header" id="speciesModalHeader">
+            <h3 class="eco-modal-title" id="speciesModalTitle">Tambakol</h3>
+            <span class="eco-modal-subtitle" id="speciesModalSub">Yellowfin Tuna</span>
+        </div>
+        <div class="eco-modal-body">
+            <div class="eco-modal-badge-row">
+                <span class="eco-modal-badge" id="speciesModalTrophic">Trophic Level 5</span>
+                <span class="eco-modal-badge" id="speciesModalStatus">FishTrack Monitored</span>
+            </div>
+            <div class="eco-modal-stats-grid">
+                <div class="eco-modal-stat-item">
+                    <span class="eco-modal-stat-label">Scientific Name</span>
+                    <span class="eco-modal-stat-value" id="speciesModalSci">Thunnus albacares</span>
+                </div>
+                <div class="eco-modal-stat-item">
+                    <span class="eco-modal-stat-label">Depth Range</span>
+                    <span class="eco-modal-stat-value" id="speciesModalDepth">0 – 200 m</span>
+                </div>
+            </div>
+            <div class="eco-modal-description-box">
+                <h4 style="margin: 0 0 0.5rem 0; font-size: 0.82rem; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800;">Ecological Role</h4>
+                <p id="speciesModalDesc" style="margin: 0; line-height: 1.5; font-size: 0.8rem; color: var(--text-secondary);"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const speciesData = {
+        tambakol: {
+            name: "Tambakol",
+            sub: "Yellowfin Tuna",
+            trophic: "Trophic Level 5 (Apex L5)",
+            status: "Ecosystem Predator",
+            monitored: false,
+            sci: "Thunnus albacares",
+            depth: "0 – 200 m",
+            hdr: "apex",
+            desc: "A highly migratory, fast-swimming pelagic predator crucial to open ocean food webs in the Philippine Sea. It preys on medium-sized fishes, squids, and crustaceans."
+        },
+        lapulapu: {
+            name: "Lapu-lapu",
+            sub: "Tiger Grouper",
+            trophic: "Trophic Level 4 (Level 4)",
+            status: "FishTrack Monitored Species",
+            monitored: true,
+            sci: "Epinephelus fuscoguttatus",
+            depth: "1 – 60 m",
+            hdr: "l4",
+            desc: "Prized reef predator named after the Mactan hero. Inhabits shallow coral reefs and rocky drop-offs, regulating prey populations. Deployed FishTrack sensors monitor its presence closely."
+        },
+        tanigue: {
+            name: "Tanigue",
+            sub: "Spanish Mackerel",
+            trophic: "Trophic Level 4 (Level 4)",
+            status: "Ecosystem Predator",
+            monitored: false,
+            sci: "Scomberomorus commerson",
+            depth: "10 – 70 m",
+            hdr: "tanigue",
+            desc: "A swift coastal predator that patrols reef drop-offs and open waters. It preys on schooling pelagic fish like Galunggong. Highly valued in local culinary dishes."
+        },
+        galunggong: {
+            name: "Galunggong",
+            sub: "Round Scad",
+            trophic: "Trophic Level 3 (Level 3)",
+            status: "FishTrack Monitored Species",
+            monitored: true,
+            sci: "Decapterus macrosoma",
+            depth: "10 – 170 m",
+            hdr: "l3",
+            desc: "School-forming pelagic fish representing a key trophic link between zooplankton and large apex predators. Extremely vital cheap protein source for millions of Filipinos."
+        },
+        bangus: {
+            name: "Bangus",
+            sub: "Milkfish",
+            trophic: "Trophic Level 3 (Level 3)",
+            status: "FishTrack Monitored Species",
+            monitored: true,
+            sci: "Chanos chanos",
+            depth: "1 – 30 m",
+            hdr: "l3",
+            desc: "The official national fish of the Philippines. Thrives in shallow coastal waters, estuaries, and coral reef lagoons. Widely farmed in coastal sea-cages and brackish ponds."
+        },
+        pusit: {
+            name: "Pusit",
+            sub: "Squid",
+            trophic: "Trophic Level 3 (Level 3)",
+            status: "Ecosystem Consumer",
+            monitored: false,
+            sci: "Uroteuthis duvaucelii",
+            depth: "5 – 120 m",
+            hdr: "pusit",
+            desc: "Active marine mollusk that feeds on zooplankton and small larvae. Plays a vital role in both mid-water food webs and the local night-fishing economy."
+        },
+        sugpo: {
+            name: "Sugpo",
+            sub: "Tiger Prawn",
+            trophic: "Trophic Level 2 (Level 2)",
+            status: "Ecosystem Crustacean",
+            monitored: false,
+            sci: "Penaeus monodon",
+            depth: "0 – 40 m",
+            hdr: "l2",
+            desc: "Large marine crustacean that feeds on detritus, tiny invertebrates, and benthic algae. Found in mangrove estuaries and muddy coastlines. Widely cultured in brackish ponds."
+        },
+        talangka: {
+            name: "Talangka",
+            sub: "Mud Crab",
+            trophic: "Trophic Level 2 (Level 2)",
+            status: "Ecosystem Crustacean",
+            monitored: false,
+            sci: "Varuna litterata",
+            depth: "0 – 10 m",
+            hdr: "talangka",
+            desc: "Small estuarine and mangrove crab that acts as a vital scavenger, processing plant detritus and small organic matter, returning nutrients to the coastal ecosystem."
+        },
+        phytoplankton: {
+            name: "Phytoplankton",
+            sub: "Microscopic Algae",
+            trophic: "Trophic Level 1 (Producers)",
+            status: "Primary Producer",
+            monitored: false,
+            sci: "Bacillariophyceae / Dinoflagellata",
+            depth: "0 – 50 m",
+            hdr: "producer",
+            desc: "Unicellular organisms that harness sunlight via photosynthesis to produce organic compounds. They form the absolute base of the marine food web and generate over 50% of global oxygen."
+        },
+        zooplankton: {
+            name: "Zooplankton",
+            sub: "Floating Micro-organisms",
+            trophic: "Trophic Level 1.5 - 2 (Consumers)",
+            status: "Primary Consumer",
+            monitored: false,
+            sci: "Copepoda / Decapoda larvae",
+            depth: "0 – 150 m",
+            hdr: "producer",
+            desc: "Drifting tiny animals, larvae, and single-celled organisms that consume phytoplankton. They are the primary food source for schooling fish like Galunggong and Bangus."
+        },
+        seagrass: {
+            name: "Seagrass / Algae",
+            sub: "Benthic Plants & Macroalgae",
+            trophic: "Trophic Level 1 (Producers)",
+            status: "Primary Producer",
+            monitored: false,
+            sci: "Enhalus / Sargassum spp.",
+            depth: "0 – 15 m",
+            hdr: "seagrass",
+            desc: "Rooted marine plants and macroalgae that form extensive meadows in shallow lagoons. Provide critical nurseries for juvenile fish, shelter, and carbon sequestration."
+        }
+    };
+
+    const modal = document.getElementById('speciesModal');
+    const closeBtn = document.getElementById('closeSpeciesModal');
+    const header = document.getElementById('speciesModalHeader');
+    const title = document.getElementById('speciesModalTitle');
+    const subtitle = document.getElementById('speciesModalSub');
+    const trophicBadge = document.getElementById('speciesModalTrophic');
+    const statusBadge = document.getElementById('speciesModalStatus');
+    const sciName = document.getElementById('speciesModalSci');
+    const depthRange = document.getElementById('speciesModalDepth');
+    const desc = document.getElementById('speciesModalDesc');
+
+    // Attach click handlers to all SVG nodes
+    document.querySelectorAll('.eco-node').forEach(node => {
+        node.addEventListener('click', function() {
+            const speciesKey = this.getAttribute('data-species');
+            const data = speciesData[speciesKey];
+            if (!data) return;
+
+            // Set content
+            title.textContent = data.name;
+            subtitle.textContent = data.sub;
+            trophicBadge.textContent = data.trophic;
+            sciName.textContent = data.sci;
+            depthRange.textContent = data.depth;
+            desc.textContent = data.desc;
+
+            // Handle FishTrack monitored badge style
+            if (data.monitored) {
+                statusBadge.textContent = "FishTrack Monitored";
+                statusBadge.className = "eco-modal-badge monitored";
+            } else {
+                statusBadge.textContent = data.status;
+                statusBadge.className = "eco-modal-badge";
+            }
+
+            // Set header class for custom gradient background
+            header.className = "eco-modal-header " + data.hdr;
+
+            // Show modal
+            modal.classList.add('active');
+        });
+    });
+
+    // Close modal handlers
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+        }
+    });
+});
+</script>
+
+{% endblock %}
+
+{% block help_content %}
+<div class="help-section">
+    <h4>About the Dashboard</h4>
+    <p><strong>What does this do?</strong> The System Dashboard gives you a bird's-eye view of your entire LoRa marine sensor mesh network. It shows connected buoy nodes, radio packets counters, and the live activity log, plus a Philippine Marine Education Hub below.</p>
+    <p><strong>Why is it important?</strong> As a central command center, the dashboard helps operators ensure the Base Station is transmitting correctly and that buoy nodes in the Coral Triangle are responding regularly.</p>
+</div>
+<div class="help-section">
+    <h4>Recommended Workflow</h4>
+    <ol class="workflow-steps" style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+        <li>Verify <strong>LoRa Connection</strong> is "Healthy". If Disconnected, check USB cabling to the Pico transceiver.</li>
+        <li>Ensure the <strong>Active Neighbors</strong> count matches deployed buoy sensors in Philippine waters.</li>
+        <li>Inspect the <strong>Live System Feed</strong> for incoming GPS coordinates or battery alert warnings.</li>
+    </ol>
+</div>
+<div class="help-section">
+    <h4>Glossary</h4>
+    <dl class="glossary-list">
+        <dt>Pico Transceiver</dt>
+        <dd>The Raspberry Pi Pico hardware module running LoRa firmware connected via USB to the base station server, acting as the radio gateway.</dd>
+        <dt>Mesh Neighbors</dt>
+        <dd>Buoy nodes that are in direct single-hop radio line-of-sight communication with the Base Station.</dd>
+        <dt>BFAR</dt>
+        <dd>Bureau of Fisheries and Aquatic Resources — the primary Philippine government agency managing fisheries and aquatic resources under the Department of Agriculture.</dd>
+        <dt>Coral Triangle</dt>
+        <dd>A 6-million km² marine region encompassing the Philippines, Indonesia, Malaysia, Papua New Guinea, Solomon Islands, and Timor-Leste — the global center of coral reef biodiversity.</dd>
+    </dl>
+</div>
+{% endblock %}

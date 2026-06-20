@@ -1,0 +1,246 @@
+{
+  "metadata": {
+    "source": "SPECIES COMMODITY.docx",
+    "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+    "version": "1.0",
+    "last_updated": "2026-06-19",
+    "note": "This JSON file is the authoritative species data source for FishTrack predictions. Add new species entries here to include them in predictions. Do NOT modify the metadata block without also updating the version and last_updated fields.",
+    "total_species": 39
+  },
+  "species": [
+    {
+      "scientific_name": "Decapterus macrosoma",
+      "common_name": "Swordfish",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in deeper offshore waters"
+    },
+    {
+      "scientific_name": "Lampris guttatus",
+      "common_name": "Bullet Tuna",
+      "availability": "Year-round",
+      "municipalities": "Found in various coastal areas"
+    },
+    {
+      "scientific_name": "Carangoides oblongus",
+      "common_name": "Frigate Tuna (Tulingan)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Stolephorus spp.",
+      "common_name": "Yellowfin Tuna (Tambakol)",
+      "availability": "Year-round",
+      "municipalities": "Found in various coastal areas"
+    },
+    {
+      "scientific_name": "Katsuwonus pelamis",
+      "common_name": "Indian Mackerel (Bangus)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Coryphaena hippurus",
+      "common_name": "Round Scad (Galunggong)",
+      "availability": "Year-round",
+      "municipalities": "Very common in coastal waters"
+    },
+    {
+      "scientific_name": "Rastrelliger brachysoma",
+      "common_name": "Moon Fish (Opah)",
+      "availability": "April\u2013June",
+      "municipalities": "Rare; found in deeper offshore waters"
+    },
+    {
+      "scientific_name": "Caesio cuning",
+      "common_name": "Oblong Trevally",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Scomberomorus commerson",
+      "common_name": "Anchovies (Dilis)",
+      "availability": "Year-round",
+      "municipalities": "Very common in coastal waters"
+    },
+    {
+      "scientific_name": "Scomberomorus commerson",
+      "common_name": "Skipjack Tuna (Gulyasan)",
+      "availability": "Year-round",
+      "municipalities": "Very common in coastal waters"
+    },
+    {
+      "scientific_name": "Sardinella lemuru",
+      "common_name": "Dolphin Fish (Mahi-mahi)",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in deeper offshore waters"
+    },
+    {
+      "scientific_name": "Sardinella gibbosa",
+      "common_name": "Short Mackerel (Hasahasa)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Lutjanus spp.",
+      "common_name": "Fusilier (Dalagang Bukid)",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Epinephelus spp.",
+      "common_name": "Spanish Mackerel (Tanigue)",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Lates calcarifer",
+      "common_name": "Narrow-Barred Spanish Mackerel",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Tylosurus crocodilus",
+      "common_name": "Bali Sardinella",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Family Exocoetidae",
+      "common_name": "Goldstripe Sardinella",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Selar crumenophthalmus",
+      "common_name": "Snapper (Maya-maya)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Family Scaridae",
+      "common_name": "Grouper (Lapu-lapu)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Decapterus kurroides",
+      "common_name": "Emperor Fish (Apahap)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Elagatis bipinnulata",
+      "common_name": "Needlefish (Agujon)",
+      "availability": "Year-round",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Aluterus monoceros",
+      "common_name": "Flying Fish (Ikan Terbang)",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Nemipterus spp.",
+      "common_name": "Bigeye Scad (Matangbaka)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Genus Naso",
+      "common_name": "Parrot Fish (Loro)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Genus Siganus",
+      "common_name": "Redtail Scad",
+      "availability": "Year-round",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Cubiceps whiteleggii",
+      "common_name": "Rainbow Runner trout",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Family Mullidae",
+      "common_name": "Unicorn Leatherjacket",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Family Balistidae",
+      "common_name": "Threadfin Bream (Bisugo)",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Sphyraena barracuda",
+      "common_name": "Unicorn Fish",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Selar crumenophthalmus",
+      "common_name": "Siganids (Rabbitfish)",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Trichiurus lepturus",
+      "common_name": "Shadow Driftfish",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Mugil cephalus",
+      "common_name": "Goatfish (Bangus)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Chanos chanos",
+      "common_name": "Triggerfish",
+      "availability": "Year-round",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Oreochromis niloticus",
+      "common_name": "Barracuda",
+      "availability": "Year-round",
+      "municipalities": "Less common; found in coastal waters"
+    },
+    {
+      "scientific_name": "Decapterus macrosoma",
+      "common_name": "Red Bigeye Scad",
+      "availability": "Year-round",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Lampris guttatus",
+      "common_name": "Largehead Hairtail",
+      "availability": "March\u2013May",
+      "municipalities": "Less common; found in coastal areas"
+    },
+    {
+      "scientific_name": "Carangoides oblongus",
+      "common_name": "Mullet (Bubuli)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Stolephorus spp.",
+      "common_name": "Milkfish (Bangus)",
+      "availability": "Year-round",
+      "municipalities": "Common in coastal waters"
+    },
+    {
+      "scientific_name": "Katsuwonus pelamis",
+      "common_name": "Tilapia",
+      "availability": "Year-round",
+      "municipalities": "Common in freshwater bodies"
+    }
+  ]
+}

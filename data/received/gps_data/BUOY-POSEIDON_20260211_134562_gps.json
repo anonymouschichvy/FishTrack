@@ -1,0 +1,12 @@
+{
+    "latitude": 13.48212111111111,
+    "longitude": 122.0532787777777,
+    "altitude_m": 9.234,
+    "speed_kmh": -0.35662400000000003,
+    "utc_time": "02:46:01+00:00",
+    "num_satellites": 10,
+    "fix_quality": 1,
+    "attempt": 3,
+    "status": "fix_acquired",
+    "recorded_at_utc": "2026-02-20T08:45:59.368372"
+}

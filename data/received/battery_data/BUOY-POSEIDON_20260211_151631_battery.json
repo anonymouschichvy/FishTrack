@@ -1,0 +1,49 @@
+{
+  "from": "BUOY-POSEIDON",
+  "type": "battery",
+  "timestamp": 1770822939.1358337,
+  "charge_state": "idle",
+  "voltage_v": 16.147,
+  "current_ma": -323,
+  "percent": 84,
+  "remaining_mah": 4008,
+  "time_to_empty_min": 749,
+  "time_to_full_min": null,
+  "low_voltage": false,
+  "vbus_voltage_v": 0.0,
+  "cells": {
+    "cell1": 4033,
+    "cell2": 4039,
+    "cell3": 4038,
+    "cell4": 4037
+  },
+  "vbus": {
+    "voltage_mv": 0,
+    "current_ma": 0,
+    "power_mw": 0
+  },
+  "battery": {
+    "voltage_mv": 16147,
+    "current_ma": -323,
+    "percent": 84,
+    "remaining_mah": 4008,
+    "time_to_empty_min": 749,
+    "time_to_full_min": null
+  },
+  "cells_mv": {
+    "cell1": 4033,
+    "cell2": 4039,
+    "cell3": 4038,
+    "cell4": 4037
+  },
+  "_metadata": {
+    "received_from": "BUOY-POSEIDON",
+    "received_at": 1770822991.5627036,
+    "received_at_readable": "2026-02-11T15:16:31.562703",
+    "data_type": "battery",
+    "saved_to": "C:\\Users\\EJ\\Desktop\\FISHTRACK\\__MACOSX\\BASE_STATION\\data\\received\\battery_data\\BUOY-POSEIDON_20260211_151631_battery.json",
+    "categorization_method": "automatic",
+    "base_station": "ATLAS - BASE_STATION"
+  },
+  "saved_at_base": "2026-02-11T15:16:31.564734"
+}

@@ -1,0 +1,582 @@
+.glassy-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            width: fit-content;
+        }
+
+        .glassy-title span {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            color: white;
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 8px 16px rgba(14, 165, 233, 0.3);
+        }
+
+        .title-icon-wrapper svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 4px rgba(255,255,255,0.5));
+        }
+
+        /* Page-specific styles */
+        .header-sonar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px var(--shadow);
+            animation: fadeIn 0.6s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Stats Grid Enhancement */
+        .stats-grid {
+            animation-delay: 0.2s;
+        }
+
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(40%, -40%);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover::after {
+            transform: translate(30%, -30%) scale(1.2);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--gray);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-label svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+
+        .stat-value-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: 900;
+            font-family: 'Cascadia Code', monospace;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-icon-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .stat-icon-large svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .stat-card:hover .stat-icon-large {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .icon-primary { 
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #0ea5e9;
+        }
+        .icon-secondary { 
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #10b981;
+        }
+        .icon-warning { 
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #f59e0b;
+        }
+        .icon-info { 
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #6366f1;
+        }
+
+        /* Performance Section */
+        .performance-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px var(--shadow);
+            animation: fadeIn 0.6s ease 0.5s;
+            animation-fill-mode: both;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title svg {
+            width: 28px;
+            height: 28px;
+            color: var(--primary);
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .chart-panel-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 260px;
+            margin-top: 0.75rem;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: unset;
+            position: relative;
+            padding: 0;
+            width: 240px;
+            height: 240px;
+        }
+
+        .progress-ring {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.3));
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chart-center-text {
+            position: absolute;
+            text-align: center;
+        }
+
+        .chart-percentage {
+            font-size: 4rem;
+            font-weight: 900;
+            font-family: 'Cascadia Code', monospace;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .chart-label {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Recent Scans Section */
+        .scans-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px var(--shadow);
+            animation: fadeIn 0.6s ease 0.6s;
+            animation-fill-mode: both;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .scans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .sonar-scans-grid {
+            margin-top: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            max-height: 430px;
+            overflow-y: auto;
+            padding-right: 0.35rem;
+            align-content: start;
+        }
+
+        .sonar-scans-grid::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        .sonar-scans-grid::-webkit-scrollbar-track {
+            background: var(--light);
+            border-radius: 999px;
+        }
+
+        .sonar-scans-grid::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 999px;
+        }
+
+        .scan-card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem; /* More compact padding */
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .scan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
+        }
+
+        .scan-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .scan-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-hover);
+        }
+
+        /* has-fish specific card styling */
+        .scan-card.has-fish {
+            border-color: rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(34, 197, 94, 0.05) 100%);
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.08);
+        }
+        
+        .scan-card.has-fish:hover {
+            border-color: var(--success);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.15);
+        }
+
+        .scan-card.has-fish::before {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+        }
+
+        .scan-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .scan-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+
+        .scan-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .scan-card.has-fish .scan-icon {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .scan-card:hover .scan-icon {
+            transform: scale(1.08) rotate(-3deg);
+        }
+
+        .scan-name {
+            flex: 1;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            word-break: break-all;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+        }
+
+        .fish-count-display {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-app);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .scan-card:hover .fish-count-display {
+            transform: scale(1.02);
+            border-color: var(--border-hover);
+        }
+
+        .scan-card.has-fish .fish-count-display {
+            background: rgba(34, 197, 94, 0.08);
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .fish-count-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .scan-card.has-fish .fish-count-number {
+            background: linear-gradient(135deg, var(--success), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .fish-count-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .fish-count-label svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .detection-details {
+            margin-top: 0.25rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .scan-card.has-fish .detection-details {
+            border-top-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .detection-item {
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            transition: all var(--transition-fast);
+            border-left: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .scan-card.has-fish .detection-item {
+            border-left-color: var(--success);
+        }
+
+        .detection-item svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        .detection-item:hover {
+            background: var(--bg-app);
+            transform: translateX(3px);
+            border-color: var(--border-hover);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .empty-icon {
+            margin-bottom: 1rem;
+        }
+
+        .empty-icon svg {
+            width: 80px;
+            height: 80px;
+            opacity: 0.4;
+            color: var(--gray);
+        }
+
+        .empty-text {
+            color: var(--gray);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Loading State */
+        .loading-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .loading-text {
+            color: var(--gray);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+
+        #panelSonarChart,
+        #panelRecentScans {
+            height: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+
+            .scans-grid,
+            .sonar-scans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-panel-body {
+                min-height: 220px;
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+            }
+
+            .chart-percentage {
+                font-size: 3rem;
+            }
+
+            .fish-count-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .performance-section,
+            .scans-section {
+                padding: 1.5rem;
+            }
+
+            .scan-card {
+                padding: 1.5rem;
+            }
+
+            .stat-icon-large {
+                width: 60px;
+                height: 60px;
+            }
+
+            .stat-icon-large svg {
+                width: 30px;
+                height: 30px;
+            }
+        }

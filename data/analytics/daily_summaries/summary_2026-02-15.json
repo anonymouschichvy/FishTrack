@@ -1,0 +1,111 @@
+{
+  "date": "2026-02-15",
+  "buoys": {
+    "BUOY-POSEIDON": {
+      "environment": {
+        "timestamp": "2026-02-15T00:00:00Z",
+        "latitude": 13.482121,
+        "longitude": 122.053279,
+        "num_satellites": 8,
+        "fix_quality": "GPS Fix (2D)",
+        "altitude_m": 10.9,
+        "battery_percent": 74,
+        "battery_voltage_v": 16.13,
+        "battery_charge_state": "charging",
+        "camera_processed_frames": 2,
+        "sonar_total_scans": 45,
+        "sonar_detections_count": 2,
+        "buoy_name": "BUOY-POSEIDON",
+        "location_desc": "Central Marinduque Pass",
+        "water_body": "Marine Pass",
+        "is_fallback": false,
+        "has_data": true,
+        "reference_date": null,
+        "actual_fish_records": [
+          {
+            "Image Name": "17_02_2026_19_22_16.png",
+            "Timestamp": "17/02/2026 19:22",
+            "Fish Detected": 1,
+            "Species Detected": [
+              {
+                "species": "Anguilla anguilla",
+                "confidence": 0.7154080271720886,
+                "direct_score": 0.6136094927787781,
+                "retrieval_score": 0.8172065615653992
+              },
+              {
+                "species": "Anguilla rostrata",
+                "confidence": 0.7067550241947174,
+                "direct_score": 0.5988756418228149,
+                "retrieval_score": 0.8146344065666199
+              },
+              {
+                "species": "Strongylura marina",
+                "confidence": 0.5877607464790344,
+                "direct_score": 0.5877607464790344,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Clarias gariepinus",
+                "confidence": 0.5594087839126587,
+                "direct_score": 0.5594087839126587,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Acipenser transmontanus",
+                "confidence": 0.554262101650238,
+                "direct_score": 0.554262101650238,
+                "retrieval_score": 0.0
+              }
+            ]
+          },
+          {
+            "Image Name": "17_02_2026_18_18_28.png",
+            "Timestamp": "17/02/2026 18:18",
+            "Fish Detected": 2,
+            "Species Detected": [
+              {
+                "species": "Anguilla rostrata",
+                "confidence": 0.6504973769187927,
+                "direct_score": 0.5944130420684814,
+                "retrieval_score": 0.706581711769104
+              },
+              {
+                "species": "Myliobatis californica",
+                "confidence": 0.6366146888051714,
+                "direct_score": 0.5617818832397461,
+                "retrieval_score": 0.7114474943705967
+              },
+              {
+                "species": "Selene vomer",
+                "confidence": 0.6361239552497864,
+                "direct_score": 0.5495734214782715,
+                "retrieval_score": 0.7226744890213013
+              },
+              {
+                "species": "Trichiurus lepturus",
+                "confidence": 0.6095079481601715,
+                "direct_score": 0.5129082798957825,
+                "retrieval_score": 0.7061076164245605
+              },
+              {
+                "species": "Clarias gariepinus",
+                "confidence": 0.5660693049430847,
+                "direct_score": 0.5660693049430847,
+                "retrieval_score": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      "camera_detections": 3,
+      "sonar_detections": 2
+    }
+  },
+  "total_detections": 3,
+  "avg_satellites": 8.0,
+  "avg_battery_charge": 74.0,
+  "total_processed_frames": 2,
+  "total_sonar_scans": 45,
+  "aggregated_at": "2026-06-19T06:44:47.966041Z"
+}

@@ -1,0 +1,480 @@
+/* Networks – page-specific styles */
+.network-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px var(--shadow-sm);
+    animation: fadeIn 0.6s ease both;
+    border: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+}
+[data-theme="dark"] .network-card {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: var(--border);
+}
+.network-card:nth-child(2) { animation-delay: 0.1s; }
+.network-card:nth-child(3) { animation-delay: 0.2s; }
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-surface);
+}
+thead {
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+}
+[data-theme="dark"] thead {
+    background: linear-gradient(135deg, #1f2937, #111827);
+}
+th {
+    text-align: left;
+    padding: 1.25rem 1rem;
+    font-weight: 700;
+    color: white;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+}
+tbody tr {
+    transition: all 0.2s;
+    animation: slideIn 0.4s ease both;
+}
+tbody tr:hover {
+    background: var(--bg-app);
+    transform: scale(1.005);
+}
+
+.codename {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.95rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-full);
+    font-size: 0.825rem;
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+}
+.status-online { background: var(--success-light); color: var(--success); }
+.status-idle { background: var(--warning-light); color: var(--warning); }
+.status-offline { background: var(--danger-light); color: var(--danger); }
+.status-unreachable { background: var(--border); color: var(--text-secondary); }
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+.status-online .status-dot { background: var(--success); box-shadow: 0 0 8px var(--success); }
+.status-idle .status-dot { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
+.status-offline .status-dot { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+.status-unreachable .status-dot { background: var(--text-muted); }
+
+.signal {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-family: 'Fira Code', monospace;
+}
+.signal-excellent { color: var(--success); background: var(--success-light); }
+.signal-good { color: var(--success); background: var(--success-light); opacity: 0.9; }
+.signal-fair { color: var(--warning); background: var(--warning-light); }
+.signal-poor { color: var(--danger); background: var(--danger-light); }
+.signal-none { color: var(--text-muted); background: var(--border); }
+
+.direct-icon {
+    font-size: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+.direct-yes { color: var(--success); background: var(--success-light); }
+.direct-no { color: var(--danger); background: var(--danger-light); }
+.direct-icon:hover { transform: scale(1.1); }
+
+.rssi {
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: var(--bg-app);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    border: 1px solid var(--border);
+}
+.time-display {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.hops-badge {
+    font-family: 'Fira Code', monospace;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+}
+
+.stats-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.stat-summary-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.6s ease both;
+}
+[data-theme="dark"] .stat-summary-card {
+    background: rgba(17, 24, 39, 0.95);
+    border-color: var(--border);
+}
+.stat-summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+}
+.stat-summary-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+.stat-summary-value {
+    font-size: 2.25rem;
+    font-weight: 900;
+    font-family: 'Fira Code', monospace;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.empty-state { text-align: center; padding: 4rem 2rem; }
+.empty-state-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; color: var(--text-muted); }
+.empty-text { color: var(--text-secondary); font-size: 1.1rem; font-weight: 500; }
+.loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; }
+.loading-text { color: var(--text-secondary); font-size: 1.05rem; font-weight: 500; margin-top: 1rem; }
+
+/* ─── D3 Visualizer Enhancements ─────────────────────────── */
+
+.svg-container-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glassmorphism Map Control HUD Overlay */
+.map-controls {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-md);
+    padding: 8px;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+    transition: all 0.25s ease;
+}
+
+[data-theme="dark"] .map-controls {
+    background: rgba(17, 24, 39, 0.7);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.map-control-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.map-control-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.map-control-btn:active {
+    transform: scale(0.95);
+}
+
+.map-control-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 4px 0;
+}
+
+/* Glassmorphic Interactive Floating Tooltip */
+#mapTooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    box-shadow: var(--shadow-overlay);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-width: 230px;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+    transform: translate(-50%, -115%);
+}
+
+[data-theme="dark"] #mapTooltip {
+    background: rgba(15, 23, 42, 0.9);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tooltip-codename {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+}
+
+.tooltip-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.tooltip-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tooltip-val {
+    font-weight: 650;
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+}
+
+/* Tooltip Battery Level Bar */
+.tooltip-battery-container {
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tooltip-battery-bar {
+    flex-grow: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.tooltip-battery-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+}
+
+/* Concentric Ripple animations for BASE Station */
+.base-ripple {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1.5;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: baseRippleAnim 3.5s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+}
+
+.base-ripple-2 {
+    animation-delay: 1.75s;
+}
+
+@keyframes baseRippleAnim {
+    0% {
+        transform: scale(0.6);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(3.5);
+        opacity: 0;
+    }
+}
+
+/* Telemetry Flow animation along link lines */
+.link-traffic-flow {
+    stroke-dasharray: 8, 14;
+    stroke: white;
+    stroke-width: 2;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: dashFlowAnim 2s linear infinite;
+}
+
+@keyframes dashFlowAnim {
+    from {
+        stroke-dashoffset: 40;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Node inspect panel card styling */
+.inspect-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.inspect-card.active {
+    display: block;
+}
+
+.inspect-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.inspect-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.inspect-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.inspect-cell {
+    background: var(--bg-app);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.inspect-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.inspect-value {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.inspect-peers-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .network-card { padding: 1.5rem; }
+    table { font-size: 0.875rem; }
+    th, td { padding: 0.75rem 0.5rem; }
+    .stats-summary { grid-template-columns: 1fr; }
+    .stat-summary-value { font-size: 2rem; }
+    #topologySvg { height: 350px; }
+}
+
+@media (max-width: 480px) {
+    .codename { font-size: 0.85rem; }
+    .status-badge { padding: 0.35rem 0.65rem; font-size: 0.75rem; }
+}

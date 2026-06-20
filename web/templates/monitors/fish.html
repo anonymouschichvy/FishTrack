@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Fish Detections Monitor - FishTrack{% endblock %}
+
+{% block crumb %}Fish Detections{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/fish.css">
+    <script src="/static/js/fish.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="welcome-hero" style="background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);" id="fishHero">
+    <div class="hero-text">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16s9-15 20-4C11 23 2 16 2 16Z"/><path d="M3.14 9.5a13.8 13.8 0 0 1 3.14-3.14"/><path d="M11 22a10 10 0 0 0 5-5"/><path d="M18 10a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/></svg>
+            Fish Detection Monitor
+        </h1>
+        <p>Real-time Computer Vision Telemetry & Species Classification</p>
+    </div>
+    <div class="hero-status">
+        <span class="status-badge" style="background: rgba(255,255,255,0.2); color: white;" id="modelBadge">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>
+            YOLOv8n-Fish v1.2 Active
+        </span>
+    </div>
+</div>
+
+<!-- Educational Explainer Panel -->
+<div class="info-card-wizard" id="fishCVExplainer">
+    <div class="wizard-header">
+        <span class="wizard-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>
+            Computer Vision Explainer
+        </span>
+        <h3>How Onboard Image Classification Works</h3>
+    </div>
+    <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+        <p><strong>What does this monitor do?</strong> It displays results from underwater camera captures that are automatically classified by buoy nodes. To conserve radio bandwidth, the full image is saved locally on the buoy's SD card, while a compressed JSON telemetry packet (containing species labels, bounding boxes, and confidence thresholds) is transmitted back to the Base Station via LoRa.</p>
+        <p><strong>Why is it important?</strong> Automated marine tracking allows continuous biological surveys without requiring physical diving or high-power cellular transmitters. Biologists can inspect species frequency curves and verify detection statistics in real-time.</p>
+    </div>
+</div>
+
+<!-- Stats Counter Grid -->
+<div class="stats-grid" id="fishStatsGrid">
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Processed Captures</span>
+            <div class="stat-icon" style="background: var(--info-light); color: var(--info);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="total-images">-</div>
+        <div class="stat-change">Total frames evaluated</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Total Fish Detected</span>
+            <div class="stat-icon" style="background: var(--success-light); color: var(--success);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="total-detections">-</div>
+        <div class="stat-change">Total count of classified entities</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-title">Unique Species</span>
+            <div class="stat-icon" style="background: var(--warning-light); color: var(--warning);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16s9-15 20-4C11 23 2 16 2 16Z"/><circle cx="18" cy="10" r="1"/></svg>
+            </div>
+        </div>
+        <div class="stat-value" id="unique-species">-</div>
+        <div class="stat-change">Different bio-classes observed</div>
+    </div>
+</div>
+
+
+<div class="card-container" style="margin-top: -1rem; margin-bottom: 0.5rem;" id="panelFishChart">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Species Distribution
+        </h3>
+        <span class="status-pill warning">Statistical breakdown</span>
+    </div>
+    <p class="educational-note">Frequency chart representing counts of different classified species.</p>
+    <div class="chart-wrapper-container" style="position: relative; height: 260px; margin-top: 1rem;">
+        <canvas id="speciesChart"></canvas>
+    </div>
+</div>
+
+<!-- Top Species Table -->
+<div class="card-container" id="panelTopSpecies">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"/><path d="M12 2a7 7 0 0 0-7 7 4 4 0 0 0 4 4h6a4 4 0 0 0 4-4 7 7 0 0 0-7-7z"/></svg>
+            Top Species Detected
+        </h3>
+        <span class="status-pill online" id="topSpeciesCount">0 classes</span>
+    </div>
+    <p class="educational-note">Ranked list of species by detection frequency.</p>
+    <div id="species-list" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <!-- JS populates ranking items -->
+        <div class="loading-block">
+            <div class="spinner"></div>
+            <p>Loading rankings...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Detections Section -->
+<div class="card-container" style="margin-top: 1.5rem;" id="panelRecentDetections">
+    <div class="card-header-flex">
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            Telemetry Photo Logs
+        </h3>
+        <span class="status-pill info">Latest feeds</span>
+    </div>
+    <p class="educational-note">Recent detections list, including timestamps, classifications, and confidence bounds.</p>
+    <div class="detections-grid" id="detections" style="margin-top: 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        <!-- JS populates detection cards -->
+        <div class="loading-block">
+            <div class="spinner"></div>
+            <p>Loading photo records...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block help_content %}
+<div class="help-section">
+    <h4>Fish Monitor Docs</h4>
+    <p><strong>What is YOLO?</strong> YOLO (You Only Look Once) is a fast, state-of-the-art neural network architecture used for object detection. The buoy uses a pruned YOLO model tuned specifically to identify marine species in low-light and turbid waters.</p>
+</div>
+<div class="help-section">
+    <h4>Verification Guide</h4>
+    <p><strong>How to verify classifications:</strong> Each photo log entry displays a confidence level percentage (e.g. 88%). If the confidence level is low (below 75%), check for turbid/muddy water conditions or camera lens fouling.</p>
+</div>
+<div class="help-section">
+    <h4>Species Glossary</h4>
+    <dl class="glossary-list">
+        <dt>Bagre marinus</dt>
+        <dd>Commonly known as the Gafftopsail Catfish, native to the Gulf of Mexico.</dd>
+        
+        <dt>Penaeus aztecus</dt>
+        <dd>The Brown Shrimp, an important indicator class for benthic marine health.</dd>
+        
+        <dt>Lutjanus campechanus</dt>
+        <dd>The Red Snapper, frequently found around marine reefs and oil platforms.</dd>
+    </dl>
+</div>
+{% endblock %}

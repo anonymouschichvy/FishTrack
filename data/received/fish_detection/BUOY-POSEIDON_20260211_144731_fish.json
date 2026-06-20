@@ -1,0 +1,557 @@
+[
+  {
+    "Image Name": "19_02_2026_19_55_48.png",
+    "Timestamp": "19/02/2026 19:55",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Bagre marinus",
+        "confidence": 0.7153042882680893,
+        "direct_score": 0.6381955146789551,
+        "retrieval_score": 0.7924130618572235
+      },
+      {
+        "species": "Ptychocheilus grandis",
+        "confidence": 0.5723994374275208,
+        "direct_score": 0.5723994374275208,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Ariopsis felis",
+        "confidence": 0.5590500831604004,
+        "direct_score": 0.5590500831604004,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Dasyatis pastinaca",
+        "confidence": 0.5582927465438843,
+        "direct_score": 0.5582927465438843,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Rutilus rutilus",
+        "confidence": 0.5563756227493286,
+        "direct_score": 0.5563756227493286,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "19_02_2026_19_34_32.png",
+    "Timestamp": "19/02/2026 19:34",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Lepisosteus platostomus",
+        "confidence": 0.5631369352340698,
+        "direct_score": 0.5631369352340698,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Barbus barbus",
+        "confidence": 0.5546389818191528,
+        "direct_score": 0.5546389818191528,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Channa aurolineata",
+        "confidence": 0.5512301325798035,
+        "direct_score": 0.5512301325798035,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Clarias batrachus",
+        "confidence": 0.5508362650871277,
+        "direct_score": 0.5508362650871277,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Epinephelus fasciatus",
+        "confidence": 0.5494627356529236,
+        "direct_score": 0.5494627356529236,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "19_02_2026_08_35_16.png",
+    "Timestamp": "19/02/2026 08:35",
+    "Fish Detected": 2,
+    "Species Detected": [
+      {
+        "species": "Tylosurus crocodilus",
+        "confidence": 0.7069648121084486,
+        "direct_score": 0.61213219165802,
+        "retrieval_score": 0.8017974325588771
+      },
+      {
+        "species": "Strongylura marina",
+        "confidence": 0.6979266405105591,
+        "direct_score": 0.5996550917625427,
+        "retrieval_score": 0.7961981892585754
+      },
+      {
+        "species": "Belone belone",
+        "confidence": 0.6859274804592133,
+        "direct_score": 0.5757004618644714,
+        "retrieval_score": 0.7961544990539551
+      },
+      {
+        "species": "Elops saurus",
+        "confidence": 0.5724425315856934,
+        "direct_score": 0.5724425315856934,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Ptychocheilus grandis",
+        "confidence": 0.5630450248718262,
+        "direct_score": 0.5630450248718262,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "18_02_2026_16_17_00.png",
+    "Timestamp": "18/02/2026 16:17",
+    "Fish Detected": 2,
+    "Species Detected": [
+      {
+        "species": "Anguilla anguilla",
+        "confidence": 0.5579030513763428,
+        "direct_score": 0.5579030513763428,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Atractosteus spatula",
+        "confidence": 0.5529906153678894,
+        "direct_score": 0.5529906153678894,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Anguilla rostrata",
+        "confidence": 0.5496408343315125,
+        "direct_score": 0.5496408343315125,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Acipenser fulvescens",
+        "confidence": 0.5461710691452026,
+        "direct_score": 0.5461710691452026,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Lepisosteus platostomus",
+        "confidence": 0.545918881893158,
+        "direct_score": 0.545918881893158,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "18_02_2026_15_34_28.png",
+    "Timestamp": "18/02/2026 15:34",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Raja clavata",
+        "confidence": 0.7016256213188171,
+        "direct_score": 0.6102077960968018,
+        "retrieval_score": 0.7930434465408325
+      },
+      {
+        "species": "Pseudobatos productus",
+        "confidence": 0.589281439781189,
+        "direct_score": 0.589281439781189,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Platycephalus fuscus",
+        "confidence": 0.5712161064147949,
+        "direct_score": 0.5712161064147949,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Platichthys stellatus",
+        "confidence": 0.5694630146026611,
+        "direct_score": 0.5694630146026611,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Pleuronectes platessa",
+        "confidence": 0.569007396697998,
+        "direct_score": 0.569007396697998,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "18_02_2026_09_32_56.png",
+    "Timestamp": "18/02/2026 09:32",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Selene vomer",
+        "confidence": 0.5625030994415283,
+        "direct_score": 0.5625030994415283,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Ameiurus melas",
+        "confidence": 0.5595602989196777,
+        "direct_score": 0.5595602989196777,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Caranx melampygus",
+        "confidence": 0.5545865893363953,
+        "direct_score": 0.5545865893363953,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Channa striata",
+        "confidence": 0.5535032749176025,
+        "direct_score": 0.5535032749176025,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Clarias batrachus",
+        "confidence": 0.553257167339325,
+        "direct_score": 0.553257167339325,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "18_02_2026_08_29_08.png",
+    "Timestamp": "18/02/2026 08:29",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Caranx hippos",
+        "confidence": 0.6459184885025024,
+        "direct_score": 0.5496222376823425,
+        "retrieval_score": 0.7422147393226624
+      },
+      {
+        "species": "Selene vomer",
+        "confidence": 0.5746556520462036,
+        "direct_score": 0.5746556520462036,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Seriola lalandi",
+        "confidence": 0.5689162611961365,
+        "direct_score": 0.5689162611961365,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Caranx ruber",
+        "confidence": 0.5611871480941772,
+        "direct_score": 0.5611871480941772,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Hypanus americanus",
+        "confidence": 0.5532979369163513,
+        "direct_score": 0.5532979369163513,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "18_02_2026_07_04_04.png",
+    "Timestamp": "18/02/2026 07:04",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Sphyrna tiburo",
+        "confidence": 0.6739299264219072,
+        "direct_score": 0.5844982862472534,
+        "retrieval_score": 0.763361566596561
+      },
+      {
+        "species": "Sphyrna lewini",
+        "confidence": 0.660970151424408,
+        "direct_score": 0.5575957298278809,
+        "retrieval_score": 0.7643445730209351
+      },
+      {
+        "species": "Ameiurus natalis",
+        "confidence": 0.5626334547996521,
+        "direct_score": 0.5626334547996521,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Lepisosteus platostomus",
+        "confidence": 0.5596892237663269,
+        "direct_score": 0.5596892237663269,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Clarias batrachus",
+        "confidence": 0.5573592782020569,
+        "direct_score": 0.5573592782020569,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "17_02_2026_19_22_16.png",
+    "Timestamp": "17/02/2026 19:22",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Anguilla anguilla",
+        "confidence": 0.7154080271720886,
+        "direct_score": 0.6136094927787781,
+        "retrieval_score": 0.8172065615653992
+      },
+      {
+        "species": "Anguilla rostrata",
+        "confidence": 0.7067550241947174,
+        "direct_score": 0.5988756418228149,
+        "retrieval_score": 0.8146344065666199
+      },
+      {
+        "species": "Strongylura marina",
+        "confidence": 0.5877607464790344,
+        "direct_score": 0.5877607464790344,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Clarias gariepinus",
+        "confidence": 0.5594087839126587,
+        "direct_score": 0.5594087839126587,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Acipenser transmontanus",
+        "confidence": 0.554262101650238,
+        "direct_score": 0.554262101650238,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "17_02_2026_18_18_28.png",
+    "Timestamp": "17/02/2026 18:18",
+    "Fish Detected": 2,
+    "Species Detected": [
+      {
+        "species": "Anguilla rostrata",
+        "confidence": 0.6504973769187927,
+        "direct_score": 0.5944130420684814,
+        "retrieval_score": 0.706581711769104
+      },
+      {
+        "species": "Myliobatis californica",
+        "confidence": 0.6366146888051714,
+        "direct_score": 0.5617818832397461,
+        "retrieval_score": 0.7114474943705967
+      },
+      {
+        "species": "Selene vomer",
+        "confidence": 0.6361239552497864,
+        "direct_score": 0.5495734214782715,
+        "retrieval_score": 0.7226744890213013
+      },
+      {
+        "species": "Trichiurus lepturus",
+        "confidence": 0.6095079481601715,
+        "direct_score": 0.5129082798957825,
+        "retrieval_score": 0.7061076164245605
+      },
+      {
+        "species": "Clarias gariepinus",
+        "confidence": 0.5660693049430847,
+        "direct_score": 0.5660693049430847,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "20_02_2026_07_58_52.png",
+    "Timestamp": "20/02/2026 07:58",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Salmo salar",
+        "confidence": 0.6722610427273644,
+        "direct_score": 0.5926471948623657,
+        "retrieval_score": 0.7518748905923631
+      },
+      {
+        "species": "Oncorhynchus keta",
+        "confidence": 0.6261782944202423,
+        "direct_score": 0.5143539309501648,
+        "retrieval_score": 0.7380026578903198
+      },
+      {
+        "species": "Salmo trutta X Salvelinus fontinalis",
+        "confidence": 0.5838617086410522,
+        "direct_score": 0.5838617086410522,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Lepisosteus oculatus",
+        "confidence": 0.5623156428337097,
+        "direct_score": 0.5623156428337097,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Lepisosteus osseus",
+        "confidence": 0.5617519021034241,
+        "direct_score": 0.5617519021034241,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "20_02_2026_06_33_48.png",
+    "Timestamp": "20/02/2026 06:33",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Albula vulpes",
+        "confidence": 0.6846894532442093,
+        "direct_score": 0.5977634191513062,
+        "retrieval_score": 0.7716154873371124
+      },
+      {
+        "species": "Carcharhinus limbatus",
+        "confidence": 0.578100323677063,
+        "direct_score": 0.578100323677063,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Elops saurus",
+        "confidence": 0.569130539894104,
+        "direct_score": 0.569130539894104,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Scomberomorus regalis",
+        "confidence": 0.5684717893600464,
+        "direct_score": 0.5684717893600464,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Scomberomorus maculatus",
+        "confidence": 0.5670900344848633,
+        "direct_score": 0.5670900344848633,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "20_02_2026_05_51_16.png",
+    "Timestamp": "20/02/2026 05:51",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Caranx ruber",
+        "confidence": 0.5763386487960815,
+        "direct_score": 0.5763386487960815,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Selene vomer",
+        "confidence": 0.5674112439155579,
+        "direct_score": 0.5674112439155579,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Spondyliosoma cantharus",
+        "confidence": 0.5568094253540039,
+        "direct_score": 0.5568094253540039,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Euthynnus alletteratus",
+        "confidence": 0.5552504658699036,
+        "direct_score": 0.5552504658699036,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Hypanus americanus",
+        "confidence": 0.5545598864555359,
+        "direct_score": 0.5545598864555359,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "19_02_2026_20_17_04.png",
+    "Timestamp": "19/02/2026 20:17",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Belone belone",
+        "confidence": 0.5658786296844482,
+        "direct_score": 0.5658786296844482,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Tylosurus crocodilus",
+        "confidence": 0.5577279925346375,
+        "direct_score": 0.5577279925346375,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Megalops atlanticus",
+        "confidence": 0.5576577186584473,
+        "direct_score": 0.5576577186584473,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Selene vomer",
+        "confidence": 0.5543875694274902,
+        "direct_score": 0.5543875694274902,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Ptychocheilus grandis",
+        "confidence": 0.5518761873245239,
+        "direct_score": 0.5518761873245239,
+        "retrieval_score": 0.0
+      }
+    ]
+  },
+  {
+    "Image Name": "19_02_2026_21_20_52.png",
+    "Timestamp": "19/02/2026 21:20",
+    "Fish Detected": 1,
+    "Species Detected": [
+      {
+        "species": "Belone belone",
+        "confidence": 0.5658786296844482,
+        "direct_score": 0.5658786296844482,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Tylosurus crocodilus",
+        "confidence": 0.5577279925346375,
+        "direct_score": 0.5577279925346375,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Megalops atlanticus",
+        "confidence": 0.5576577186584473,
+        "direct_score": 0.5576577186584473,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Selene vomer",
+        "confidence": 0.5543875694274902,
+        "direct_score": 0.5543875694274902,
+        "retrieval_score": 0.0
+      },
+      {
+        "species": "Ptychocheilus grandis",
+        "confidence": 0.5518761873245239,
+        "direct_score": 0.5518761873245239,
+        "retrieval_score": 0.0
+      }
+    ]
+  }
+]

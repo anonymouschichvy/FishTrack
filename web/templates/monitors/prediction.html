@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+{% block title %}Fish Prediction & Analytics - FishTrack{% endblock %}
+
+{% block crumb %}Fish Prediction{% endblock %}
+
+{% block extra_head %}
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="stylesheet" href="/static/css/prediction.css">
+    <script src="/static/js/prediction.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<!-- Welcome Hero Banner -->
+<div class="welcome-hero" style="background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); flex-wrap: wrap;" id="predictionHero">
+    <div class="hero-text" style="flex: 1; min-width: 200px;">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16s9-15 20-4C11 23 2 16 2 16Z"/><circle cx="18" cy="10" r="1"/></svg>
+            Fish Prediction &amp; Analytics
+        </h1>
+        <p>Location-Based Species Probability &amp; Habitat Matching Model</p>
+    </div>
+    <div class="hero-status" style="flex-shrink: 0;">
+        <span class="status-badge" style="background: rgba(255,255,255,0.2); color: white; white-space: nowrap;" id="modelStatusBadge">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Verified BFAR Knowledge Active
+        </span>
+    </div>
+</div>
+
+<div class="prediction-layout">
+    
+    <!-- 1. Interactive Calendar Panel -->
+        <div class="glass-panel" id="panelCalendar">
+            <div class="card-header-flex" style="margin-bottom: 0.5rem;">
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Interactive Calendar
+                </h3>
+            </div>
+            <p class="educational-note" style="margin-bottom: 0.75rem;">Select any calendar date to predict species presence based on seasonal preferences.</p>
+            
+            <div class="calendar-widget">
+                <div class="calendar-header">
+                    <button class="calendar-nav-btn" id="calPrevMonth">&lt;</button>
+                    <h4 id="calMonthLabel">June 2026</h4>
+                    <button class="calendar-nav-btn" id="calNextMonth">&gt;</button>
+                </div>
+                <div class="calendar-grid" id="calendarDaysGrid">
+                    <!-- JS renders days dynamically -->
+                </div>
+            </div>
+            
+            <div style="margin-top: 0.75rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-secondary);">
+                <span>Target Date: <strong id="selectedDateLabel" class="code">2026-06-19</strong></span>
+                <button class="btn btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.75rem; min-height: 28px;" id="btnResetToday">Today</button>
+            </div>
+        </div>
+        
+        <!-- 2. Spatial Intelligence Map -->
+        <div class="glass-panel" id="panelMap">
+            <div class="card-header-flex">
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Location Intelligence
+                </h3>
+                <span class="status-pill online">Map Active</span>
+            </div>
+            <p class="educational-note">Visualizes active buoy stations and hotspots. Click a station marker to load its telemetry values.</p>
+            <div class="map-container" id="predictionMap"></div>
+        </div>
+        
+        <!-- 3. Buoy selector and telemetry summary -->
+        <div class="glass-panel">
+            <div class="buoy-selector-tabs" id="buoyTabBar">
+                <!-- JS will inject buoy tabs dynamically -->
+            </div>
+            
+            <div class="card-header-flex">
+                <div>
+                    <h3 id="currentBuoyTitle">BUOY-POSEIDON Summary</h3>
+                    <span id="currentBuoyDesc" style="font-size: 0.8rem; color: var(--text-muted);">Central Marinduque Pass | Depth: 45m</span>
+                </div>
+                <div style="display:flex; gap:0.5rem; align-items:center;">
+                    <span class="status-pill info" id="buoyWaterQuality">Water: Excellent</span>
+                    <span class="status-pill success" id="buoyBiodiversity">Biodiversity: Optimal</span>
+                </div>
+            </div>
+
+            <!-- Telemetry Offline Warning Banner with Question/Jump Link -->
+            <div id="telemetryOfflineBanner" class="alert-item-card warning" style="display: none; margin-top: 1rem; margin-bottom: 0.5rem; background: rgba(217, 119, 6, 0.1); border-color: rgba(217, 119, 6, 0.25);">
+                <div class="alert-icon-svg" style="color: var(--warning); margin-top: 1px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="alert-content-wrapper">
+                    <h5 style="color: var(--warning); margin: 0 0 2px 0; font-size: 0.85rem; font-weight: 700;">No Telemetry Captured for Selected Date</h5>
+                    <p style="font-size: 0.77rem; margin: 0; line-height: 1.4; color: var(--text-secondary);">
+                        There are no verified GPS, battery, camera, or sonar telemetry logs on disk for <span id="offlineBuoyName" style="font-weight: 700;">BUOY-POSEIDON</span> on <span id="offlineDateLabel" style="font-weight: 700;">2026-06-19</span>.
+                        <br>
+                        <span style="font-weight: 700; color: var(--warning);">Would you like to switch to a date with verified captures?</span>
+                        <a href="javascript:void(0);" onclick="jumpToDate(2026, 1, 19)" style="color: var(--primary); text-decoration: underline; font-weight: 700; margin-left: 5px;">Yes, jump to Feb 19, 2026</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Reference Mode Warning Banner -->
+            <div id="referenceModeBanner" class="alert-item-card info" style="display: none; margin-top: 1rem; margin-bottom: 0.5rem; background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.25);">
+                <div class="alert-icon-svg" style="color: var(--info); margin-top: 1px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div class="alert-content-wrapper">
+                    <h5 style="color: var(--info); margin: 0 0 2px 0; font-size: 0.85rem; font-weight: 700;">Environmental Reference Mode Active</h5>
+                    <p style="font-size: 0.77rem; margin: 0; line-height: 1.4; color: var(--text-secondary);">No telemetry logs exist for the selected date on this buoy. Displaying historical reference telemetry from <strong id="referenceDateLabel" class="code">2026-02-19</strong> to maintain spatial predictions.</p>
+                </div>
+            </div>
+            
+            <div class="telemetry-grid" id="telemetryGrid">
+                <!-- Telemetry badges populated by JS -->
+            </div>
+        </div>
+        
+        <!-- Tabs Selector -->
+        <div class="tab-controls">
+            <button class="tab-btn active" onclick="switchPredictionTab('dashboard')">Prediction Dashboard</button>
+            <button class="tab-btn" onclick="switchPredictionTab('visuals')">Data Visualization</button>
+            <button class="tab-btn" onclick="switchPredictionTab('glossary')">Fish Information Center</button>
+        </div>
+        
+        <!-- TAB 1: Prediction Dashboard -->
+        <div id="tab-dashboard" class="tab-pane active" style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
+            <div class="glass-panel">
+                <div class="card-header-flex">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        Species Presence Probability
+                    </h3>
+                    <span class="status-pill warning" id="predictionsCount">0 species predicted</span>
+                </div>
+                <p class="educational-note">Matches environmental preferences against buoy data. Click a species row to view contributing factors.</p>
+                
+                <div class="prediction-cards-container" id="predictionsList">
+                    <!-- JS renders cards dynamically -->
+                </div>
+            </div>
+            
+            <!-- AI Insights narrative explaining predictions -->
+            <div class="glass-panel">
+                <div class="card-header-flex">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                        AI-Powered Predictive Insights
+                    </h3>
+                    <span class="status-pill info">Natural Language Summary</span>
+                </div>
+                <div class="narrative-insight-box" id="aiInsightsBox">
+                    <p>Loading environmental correlation summaries...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 2: Data Visualization -->
+        <div id="tab-visuals" class="tab-pane" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;">
+            <div class="glass-panel">
+                <div class="card-header-flex">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        Camera YOLO Detections vs. Sonar Biomass
+                    </h3>
+                </div>
+                <p class="educational-note">Correlates actual optical fish counts from camera detections with acoustic targets from sonar profiler runs.</p>
+                <div class="chart-responsive-wrapper" style="position: relative; height: 240px; margin-top: 1rem;">
+                    <canvas id="cameraSonarCorrelationChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-panel">
+                <div class="card-header-flex">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        Seasonal Species Abundance Breakdown
+                    </h3>
+                </div>
+                <p class="educational-note">Illustrates the ratio of year-round species vs. seasonal migrants from the authoritative BFAR MIMAROPA dataset.</p>
+                <div class="chart-responsive-wrapper" style="position: relative; height: 240px; margin-top: 1rem;">
+                    <canvas id="seasonalAbundanceChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="glass-panel">
+                <div class="card-header-flex">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        Monthly Detections &amp; Species Abundance Trend
+                    </h3>
+                </div>
+                <div class="chart-responsive-wrapper" style="position: relative; height: 240px; margin-top: 1rem;">
+                    <canvas id="occurrenceTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 3: Fish Information Center -->
+        <div id="tab-glossary" class="tab-pane" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;">
+            <div class="glass-panel">
+                <div class="card-header-flex">
+                    <h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        Fish Information Center
+                    </h3>
+                    <span class="status-pill online" id="glossaryCount">39 profiles</span>
+                </div>
+                <p class="educational-note" style="margin-bottom: 1rem;">Authoritative directory of fish species habitats, breeding indices, and economic importance sourced from Marinduque fisheries registers.</p>
+                
+                <input type="text" class="fish-info-search" id="fishSearchInput" placeholder="Search by common name, scientific name, or habitat...">
+                
+                <div class="fish-glossary-grid" id="fishGlossaryGrid">
+                    <!-- JS renders cards dynamically -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Smart Recommendations & Alerts -->
+        <div class="glass-panel" id="panelRecs">
+            <div class="card-header-flex">
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    Smart Recommendations &amp; Warnings
+                </h3>
+            </div>
+            
+            <div id="alertsLogContainer">
+                <!-- Alerts cards injected by JS -->
+            </div>
+            
+            <div class="rec-cards-grid" id="recsGrid">
+                <!-- Recommendation items injected by JS -->
+            </div>
+        </div>
+        
+</div>
+{% endblock %}
+
+{% block help_content %}
+<div class="help-section">
+    <h4>About Fish Prediction</h4>
+    <p><strong>How are predictions calculated?</strong> The prediction engine uses seasonal availability registers from the authoritative BFAR MIMAROPA dataset (compiled from Marinduque Provincial Fishery Office records in <code>SPECIES COMMODITY.docx</code>) and correlates them with real-time buoy telemetry. The presence probability is determined by combining seasonal windows, GPS geographic proximity, camera YOLO optical detections, and sonar acoustic biomass echoes.</p>
+</div>
+<div class="help-section">
+    <h4>AI-Powered Predictive Insights</h4>
+    <p><strong>Google Gemini AI Integration:</strong> Detections from the computer vision model (YOLOv8) are first verified against the BFAR database. The Gemini API analyzes family-level taxonomical connections (such as elevating related species under the Tuna, Scad, or Mackerel families if one is captured) and evaluates environmental match factors. A 3-paragraph biological narrative is generated in real-time to summarize the buoy's telemetry and prediction indicators.</p>
+</div>
+<div class="help-section">
+    <h4>Onboard Telemetry Metrics</h4>
+    <dl class="glossary-list">
+        <dt>Camera YOLO Detections</dt>
+        <dd>The onboard camera runs a real-time object detection model (YOLOv8) to capture optical frames of fish. These scientific classifications are verified against BFAR taxonomy using the Gemini API to identify connected family species.</dd>
+        
+        <dt>Sonar Acoustic Biomass</dt>
+        <dd>A 200 kHz echo sounder scans the water column to count underwater acoustic targets. Schooling pelagic species correlate with high echoes and sonar sweep densities.</dd>
+        
+        <dt>GPS Spatial Positioning</dt>
+        <dd>Coordinates from the active GPS receiver are matched against municipal distribution zones (e.g. offshore deep trenches or shallow coastal shelves) preferred by each species.</dd>
+        
+        <dt>BMS &amp; Battery Health</dt>
+        <dd>LiFePO4 cell voltage, charge percentage, and charging states monitored by the BMS. Low battery levels trigger warnings and switch the buoy to power-saving schedules.</dd>
+    </dl>
+</div>
+{% endblock %}

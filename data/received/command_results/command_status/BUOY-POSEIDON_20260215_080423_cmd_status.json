@@ -1,0 +1,20 @@
+{
+  "command_id": null,
+  "sender": "BUOY-POSEIDON",
+  "script": "battery",
+  "command": null,
+  "exit_code": -1,
+  "feedback_type": "unknown",
+  "message": "",
+  "timestamp": null,
+  "_metadata": {
+    "received_from": "BUOY-POSEIDON",
+    "received_at": 1771142663.1498373,
+    "received_at_readable": "2026-02-15T08:04:23.149837",
+    "data_type": "command_status",
+    "saved_to": "C:\\Users\\EJ\\Desktop\\FISHTRACK\\__MACOSX\\BASE_STATION\\data\\received\\command_results\\command_status\\BUOY-POSEIDON_20260215_080423_cmd_status.json",
+    "categorization_method": "automatic",
+    "base_station": "ATLAS - BASE_STATION"
+  },
+  "saved_at_base": "2026-02-15T08:04:23.150842"
+}

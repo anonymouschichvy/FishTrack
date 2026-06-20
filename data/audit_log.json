@@ -1,0 +1,34 @@
+[
+  {
+    "timestamp": "2026-06-19T12:26:47.817727",
+    "action": "SEND_SCRIPT_FAIL",
+    "operator": "Operator",
+    "details": "Failed to send script(s) battery",
+    "status": "error",
+    "node": "BUOY-POSEIDON"
+  },
+  {
+    "timestamp": "2026-06-19T12:27:04.688412",
+    "action": "SEND_SCRIPT_FAIL",
+    "operator": "Operator",
+    "details": "Failed to send script(s) battery",
+    "status": "error",
+    "node": "BUOY-POSEIDON"
+  },
+  {
+    "timestamp": "2026-06-19T12:27:21.510592",
+    "action": "SEND_LINUX_FAIL",
+    "operator": "Operator",
+    "details": "Failed to send Linux command: ls -la ~",
+    "status": "error",
+    "node": "BUOY-POSEIDON"
+  },
+  {
+    "timestamp": "2026-06-19T12:27:38.366898",
+    "action": "SEND_LINUX_FAIL",
+    "operator": "Operator",
+    "details": "Failed to send Linux command: ls -la ~",
+    "status": "error",
+    "node": "BUOY-POSEIDON"
+  }
+]

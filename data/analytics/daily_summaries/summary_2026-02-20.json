@@ -1,0 +1,148 @@
+{
+  "date": "2026-02-20",
+  "buoys": {
+    "BUOY-POSEIDON": {
+      "environment": {
+        "timestamp": "2026-02-20T00:00:00Z",
+        "latitude": 13.482121,
+        "longitude": 122.053279,
+        "num_satellites": 10,
+        "fix_quality": "GPS Fix (2D)",
+        "altitude_m": 9.234,
+        "battery_percent": 74,
+        "battery_voltage_v": 16.13,
+        "battery_charge_state": "charging",
+        "camera_processed_frames": 3,
+        "sonar_total_scans": 23,
+        "sonar_detections_count": 3,
+        "buoy_name": "BUOY-POSEIDON",
+        "location_desc": "Central Marinduque Pass",
+        "water_body": "Marine Pass",
+        "is_fallback": false,
+        "has_data": true,
+        "reference_date": null,
+        "actual_fish_records": [
+          {
+            "Image Name": "20_02_2026_07_58_52.png",
+            "Timestamp": "20/02/2026 07:58",
+            "Fish Detected": 1,
+            "Species Detected": [
+              {
+                "species": "Salmo salar",
+                "confidence": 0.6722610427273644,
+                "direct_score": 0.5926471948623657,
+                "retrieval_score": 0.7518748905923631
+              },
+              {
+                "species": "Oncorhynchus keta",
+                "confidence": 0.6261782944202423,
+                "direct_score": 0.5143539309501648,
+                "retrieval_score": 0.7380026578903198
+              },
+              {
+                "species": "Salmo trutta X Salvelinus fontinalis",
+                "confidence": 0.5838617086410522,
+                "direct_score": 0.5838617086410522,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Lepisosteus oculatus",
+                "confidence": 0.5623156428337097,
+                "direct_score": 0.5623156428337097,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Lepisosteus osseus",
+                "confidence": 0.5617519021034241,
+                "direct_score": 0.5617519021034241,
+                "retrieval_score": 0.0
+              }
+            ]
+          },
+          {
+            "Image Name": "20_02_2026_06_33_48.png",
+            "Timestamp": "20/02/2026 06:33",
+            "Fish Detected": 1,
+            "Species Detected": [
+              {
+                "species": "Albula vulpes",
+                "confidence": 0.6846894532442093,
+                "direct_score": 0.5977634191513062,
+                "retrieval_score": 0.7716154873371124
+              },
+              {
+                "species": "Carcharhinus limbatus",
+                "confidence": 0.578100323677063,
+                "direct_score": 0.578100323677063,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Elops saurus",
+                "confidence": 0.569130539894104,
+                "direct_score": 0.569130539894104,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Scomberomorus regalis",
+                "confidence": 0.5684717893600464,
+                "direct_score": 0.5684717893600464,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Scomberomorus maculatus",
+                "confidence": 0.5670900344848633,
+                "direct_score": 0.5670900344848633,
+                "retrieval_score": 0.0
+              }
+            ]
+          },
+          {
+            "Image Name": "20_02_2026_05_51_16.png",
+            "Timestamp": "20/02/2026 05:51",
+            "Fish Detected": 1,
+            "Species Detected": [
+              {
+                "species": "Caranx ruber",
+                "confidence": 0.5763386487960815,
+                "direct_score": 0.5763386487960815,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Selene vomer",
+                "confidence": 0.5674112439155579,
+                "direct_score": 0.5674112439155579,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Spondyliosoma cantharus",
+                "confidence": 0.5568094253540039,
+                "direct_score": 0.5568094253540039,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Euthynnus alletteratus",
+                "confidence": 0.5552504658699036,
+                "direct_score": 0.5552504658699036,
+                "retrieval_score": 0.0
+              },
+              {
+                "species": "Hypanus americanus",
+                "confidence": 0.5545598864555359,
+                "direct_score": 0.5545598864555359,
+                "retrieval_score": 0.0
+              }
+            ]
+          }
+        ]
+      },
+      "camera_detections": 3,
+      "sonar_detections": 3
+    }
+  },
+  "total_detections": 3,
+  "avg_satellites": 10.0,
+  "avg_battery_charge": 74.0,
+  "total_processed_frames": 3,
+  "total_sonar_scans": 23,
+  "aggregated_at": "2026-06-19T06:44:47.949335Z"
+}

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- Android Chrome status bar color (light theme default; JS will update for dark) -->
+    <meta name="theme-color" id="themeColorMeta" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)">
+    <!-- iOS Safari PWA / full-screen support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>{% block title %}FishTrack BASE Station{% endblock %}</title>
+    
+    <!-- Offline Fallback Typography & Core Styles -->
+    <link rel="stylesheet" href="/static/styles.css">
+    
+    <!-- Localized Libraries for Visualizations (Offline-First) -->
+    <link rel="stylesheet" href="/static/libs/leaflet.css">
+    <script src="/static/libs/leaflet.js"></script>
+    <script src="/static/libs/d3.min.js"></script>
+    <script src="/static/libs/chart.umd.js"></script>
+    
+    <!-- Theme Initializer (Must load early to prevent color flash) -->
+    <script src="/static/js/theme.js" defer></script>
+    <script src="/static/js/palette.js" defer></script>
+    <script src="/static/js/onboarding.js" defer></script>
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Top Progress Bar (Visual indicator for page actions) -->
+    <div class="progress-bar-top" id="topProgressBar"></div>
+
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo" aria-label="FishTrack Home">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12s4-6 9-6 9 6 9 6-4 6-9 6-9-6-9-6z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-name">FishTrack</span>
+                    <span class="sub-brand">BASE STATION</span>
+                </div>
+            </a>
+
+            <!-- Search Bar / Command Palette Trigger -->
+            <div class="search-trigger" onclick="openPalette()" title="Press Ctrl + K to search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <span>Quick Search...</span>
+                <kbd>Ctrl+K</kbd>
+            </div>
+
+            <!-- Header Controls -->
+            <div class="nav-actions">
+
+                <!-- Notifications Toggle -->
+                <div class="header-icon-btn" onclick="toggleNotifications()" id="notifBtn" title="Notification Center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
+                </div>
+
+                <!-- Guided Tour Trigger -->
+                <button class="header-btn" onclick="startOnboardingTour()" title="Start guided UI tour">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    <span>Guide</span>
+                </button>
+
+                <!-- Help Drawer Toggle -->
+                <button class="header-btn btn-secondary" onclick="toggleHelpDrawer()" title="View docs and glossary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    <span>Docs</span>
+                </button>
+
+                <!-- Mobile Navigation Toggle -->
+                <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Navigation Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar overlay (mobile tap-to-close backdrop) -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebarOnMobile()" aria-hidden="true"></div>
+
+    <!-- Side Navigation Menu (collapsible on mobile) -->
+    <div class="sidebar-nav" id="sidebarNav">
+        <ul class="sidebar-menu">
+            <li><a href="/" id="link-home" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                Dashboard
+            </a></li>
+            <li><a href="/networks/" id="link-networks" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                Networks Map
+            </a></li>
+            <li><a href="/commands/" id="link-commands" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Command Center
+            </a></li>
+            <li><a href="/linux_commands/" id="link-linux" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                Linux Console
+            </a></li>
+            <li><a href="/scheduler/" id="link-scheduler" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Job Scheduler
+            </a></li>
+            <li class="menu-divider">Telemetry Monitors</li>
+            <li><a href="/monitors/fish/" id="link-fish" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 12c-3.5 0-7-2-10-4-3 2-6.5 4-10 4 3.5 0 7 2 10 4 3-2 6.5-4 10-4z"></path><circle cx="17" cy="12" r="1"></circle></svg>
+                Fish Detections
+            </a></li>
+            <li><a href="/prediction/" id="link-prediction" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16s9-15 20-4C11 23 2 16 2 16Z"/><circle cx="18" cy="10" r="1"/></svg>
+                Fish Prediction
+            </a></li>
+            <li><a href="/monitors/sonar/" id="link-sonar" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3m0 14v3M4.93 4.93l2.12 2.12m9.9 9.9l2.12 2.12M2 12h3m14 0h3M4.93 19.07l2.12-2.12m9.9-9.9l2.12-2.12M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path></svg>
+                Sonar Profiler
+            </a></li>
+            <li><a href="/monitors/gps/" id="link-gps" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                GPS Tracking
+            </a></li>
+            <li><a href="/monitors/battery/" id="link-battery" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><line x1="6" y1="12" x2="14" y2="12"></line></svg>
+                Battery Health
+            </a></li>
+            <li class="menu-divider">System</li>
+            <li><a href="/settings/" id="link-settings" class="sidebar-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Settings
+            </a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="feedback-link" onclick="openFeedbackModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:4px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                Operator Feedback
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="main-content-layout" id="mainContentLayout">
+        <!-- Breadcrumbs Navigation -->
+        <nav class="breadcrumbs-nav" id="breadcrumbs">
+            <span class="crumb"><a href="/">Base Station</a></span>
+            <span class="crumb-separator">/</span>
+            <span class="crumb active" id="currentCrumb">{% block crumb %}Dashboard{% endblock %}</span>
+        </nav>
+        
+
+        <!-- Render Child Views Here -->
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Context Help Drawer (Right Sidebar) -->
+    <aside class="help-drawer" id="helpDrawer">
+        <div class="help-drawer-header">
+            <h3>
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                Documentation & Glossary
+            </h3>
+            <button class="close-btn" onclick="toggleHelpDrawer()">&times;</button>
+        </div>
+        <!-- Drawer Tabs Selector -->
+        <div class="help-drawer-tabs">
+            <button class="help-tab-btn active" id="helpTabBtn-page" onclick="switchHelpTab('page')">Page Help</button>
+            <button class="help-tab-btn" id="helpTabBtn-system" onclick="switchHelpTab('system')">System Guide</button>
+            <button class="help-tab-btn" id="helpTabBtn-glossary" onclick="switchHelpTab('glossary')">Glossary</button>
+        </div>
+
+        <div class="help-drawer-body" style="padding-top: 1rem;">
+            <!-- Tab 1: Page Help (Dynamic) -->
+            <div id="helpTab-page" class="help-tab-content" style="display: flex; flex-direction: column; gap: 1.5rem; width: 100%;">
+                {% block help_content %}
+                <div class="help-section">
+                    <h4>Welcome to the FishTrack Base Station</h4>
+                    <p>This dashboard monitors a mesh network of buoy sensors positioned in the ocean. Let's look at what the key telemetry monitors track:</p>
+                </div>
+                <div class="help-section">
+                    <h4>Glossary of Technical Terms</h4>
+                    <dl class="glossary-list">
+                        <dt>LoRa (Long Range)</dt>
+                        <dd>A spread-spectrum modulation technique derived from chirp spread spectrum (CSS) technology, designed for low-power, long-distance telemetry.</dd>
+                        
+                        <dt>RSSI (Received Signal Strength Indicator)</dt>
+                        <dd>A measurement of the power present in a received radio signal. Closer to 0 dBm is stronger; marine links usually operate between -30 dBm and -110 dBm.</dd>
+                        
+                        <dt>SNR (Signal-to-Noise Ratio)</dt>
+                        <dd>The ratio of signal power to noise power. Positive values indicate a strong signal, while negative values indicate the signal is below the noise floor.</dd>
+                        
+                        <dt>Buoy Mesh Node</dt>
+                        <dd>An autonomous sensor buoy equipped with solar panels, battery charger, GPS receiver, sonar scanner, camera, and a LoRa radio to relay messages back to the Base Station.</dd>
+                    </dl>
+                </div>
+                {% endblock %}
+            </div>
+
+            <!-- Tab 2: System Guide (Global Manual) -->
+            <div id="helpTab-system" class="help-tab-content" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;">
+                <div class="help-section">
+                    <h4>System Operations Manual</h4>
+                    <p>The FishTrack Base Station coordinates marine mesh telemetry from multiple remote buoys. The key modules and features of the system include:</p>
+                </div>
+                <div class="help-section">
+                    <h4>1. Dashboard &amp; Connected Buoys</h4>
+                    <p>Provides a summary of active nodes, message counts, and USB connection health to the radio hardware. The <strong>Live System Feed</strong> aggregates real-time JSON packets, ping events, and warnings.</p>
+                </div>
+                <div class="help-section">
+                    <h4>2. Interactive Routing Map</h4>
+                    <p>Visualizes spatial node layouts and telemetry flows using a D3 force-directed link model. Lines are color-coded based on signal strength. Hovering over a node displays battery levels, hops, and peer lists.</p>
+                </div>
+                <div class="help-section">
+                    <h4>3. Command Center</h4>
+                    <p>Manages preset script dispatches. Presets are highly optimized binary indicators pre-compiled on buoy nodes to execute tasks (like camera captures or sonar sweeps) without overloading LoRa links.</p>
+                </div>
+                <div class="help-section">
+                    <h4>4. Linux Subprocess Console</h4>
+                    <p>Allows operators to run shell commands on buoys. For safety, execution is limited to a 15-second timeout, and commands matching security filters (e.g., <code>rm -rf</code>, reboot loops) are blocked.</p>
+                </div>
+                <div class="help-section">
+                    <h4>5. Job Scheduler</h4>
+                    <p>Automates periodic telemetry gathering (Hourly, Daily, Weekly, or specific intervals). Schedule timing should be staggered to avoid radio collisions (LoRa duty cycle limits).</p>
+                </div>
+                <div class="help-section">
+                    <h4>6. Fish Detection Monitor</h4>
+                    <p>Displays counts and logs from computer vision object detection models (YOLOv8n) running on the buoy camera feed. Use confidence thresholds to identify false detections caused by turbid waters or biofouling.</p>
+                </div>
+                <div class="help-section">
+                    <h4>7. Sonar Profiler Monitor</h4>
+                    <p>Controls and plots 200 kHz ultrasonic echograms. Measures acoustic reflections to estimate biomass thickness and underwater depth profiles up to 100 meters.</p>
+                </div>
+                <div class="help-section">
+                    <h4>8. GPS Tracking &amp; Geofencing</h4>
+                    <p>Tracks buoy drift using latitude and longitude coordinates. Fix quality levels indicate positional accuracy (3D, 2D, or No Fix). Drifts exceeding the geofence radius trigger alert highlights.</p>
+                </div>
+                <div class="help-section">
+                    <h4>9. Battery Health &amp; BMS</h4>
+                    <p>Monitors LiFePO4 cells. Shows individual cell voltages, balancing deviation, charger inputs (VBUS), and temperatures. Deviations above 150 mV highlight potential cell degradation.</p>
+                </div>
+                <div class="help-section">
+                    <h4>10. Settings &amp; Fleet Registry</h4>
+                    <p>Configures fleet authorization lists, serial port settings, and server endpoints. Unregistered nodes showing up in radio logs must be added to the allowed Fleet IDs list to begin tracking.</p>
+                </div>
+                <div class="help-section">
+                    <h4>11. UI Controls &amp; Operator Tools</h4>
+                    <p>Includes a dark mode theme selector, quick search command palette (Ctrl+K), guided onboarding tutorial wizard, and direct feedback submission modal for reporting observations.</p>
+                </div>
+            </div>
+
+            <!-- Tab 3: Master Glossary -->
+            <div id="helpTab-glossary" class="help-tab-content" style="display: none; flex-direction: column; gap: 1.5rem; width: 100%;">
+                <div class="help-section">
+                    <h4>Master Glossary of Terms</h4>
+                    <dl class="glossary-list">
+                        <!-- Radio & Network -->
+                        <dt>LoRa (Long Range)</dt>
+                        <dd>A spread-spectrum modulation technique derived from chirp spread spectrum (CSS) technology, designed for low-power, long-distance radio telemetry.</dd>
+                        
+                        <dt>RSSI (Received Signal Strength Indicator)</dt>
+                        <dd>A measurement of radio power in received packets, measured in dBm. Closer to 0 dBm is stronger (-50 dBm is excellent, -110 dBm is near drop).</dd>
+                        
+                        <dt>SNR (Signal-to-Noise Ratio)</dt>
+                        <dd>The ratio of signal power to background noise power in decibels. Positive is a clear signal; negative means the signal is below the noise floor.</dd>
+                        
+                        <dt>Sink Node</dt>
+                        <dd>The master gateway receiver (Node 0, Base Station) where all multi-hop radio telemetry payloads terminate.</dd>
+                        
+                        <dt>Hop Count</dt>
+                        <dd>The number of relay jumps a radio packet takes through peer buoys to travel from its source node to the Base Station.</dd>
+                        
+                        <dt>Mesh Routing</dt>
+                        <dd>A self-healing network topology that redirects packets through intermediate neighboring nodes when a direct radio link is blocked.</dd>
+                        
+                        <dt>ACK (Acknowledgement)</dt>
+                        <dd>A small packet returned by a receiving buoy node to confirm it successfully demodulated and accepted a command transmission.</dd>
+                        
+                        <dt>Duty Cycle</dt>
+                        <dd>The percentage of time a radio transmitter is active on a channel, limited by hardware constraints and regulations to prevent collision.</dd>
+                        
+                        <dt>Pico Serial Gateway</dt>
+                        <dd>A Raspberry Pi Pico board running custom gateway firmware connected via USB to act as the RF-to-Base-Station bridge.</dd>
+                        
+                        <dt>Discovery Beacon</dt>
+                        <dd>An periodic radio broadcast sent by nodes containing their codename and neighbor link metrics, used to construct topology maps.</dd>
+
+                        <!-- Computer Vision & Species -->
+                        <dt>YOLO (You Only Look Once)</dt>
+                        <dd>A fast, real-time object detection neural network running on the buoy to classify fish species from camera frames.</dd>
+                        
+                        <dt>Confidence Level</dt>
+                        <dd>A percentage representing the model's certainty. Scores under 75% indicate turbid water, poor lighting, or camera fouling.</dd>
+                        
+                        <dt>Camera Viewfinder</dt>
+                        <dd>The visual pane showing live or cached snapshots from the camera on a selected buoy node.</dd>
+                        
+                        <dt>Bagre marinus</dt>
+                        <dd>Scientific name of the Gafftopsail Catfish, commonly detected in regional marine survey areas.</dd>
+                        
+                        <dt>Penaeus aztecus</dt>
+                        <dd>Scientific name of the Brown Shrimp, serving as a key indicator class for benthic marine health.</dd>
+                        
+                        <dt>Lutjanus campechanus</dt>
+                        <dd>Scientific name of the Red Snapper, monitored around offshore rigs, reefs, and pipelines.</dd>
+
+                        <!-- Power & Electronics -->
+                        <dt>BMS (Battery Management System)</dt>
+                        <dd>Electronic protection circuit tracking individual cell voltages and balancing battery cells during charging phases.</dd>
+                        
+                        <dt>LiFePO4 Chemistry</dt>
+                        <dd>Lithium Iron Phosphate cells. Chosen for buoy nodes due to thermal stability, long cycle life, and high safety factor in marine elements.</dd>
+                        
+                        <dt>VBUS</dt>
+                        <dd>Voltage at the charging bus input, representing power harvested from solar panel arrays before conversion.</dd>
+                        
+                        <dt>Cell Balancing</dt>
+                        <dd>The process of shunting charge to equalize individual cell voltages, keeping cell deviation below 150 mV.</dd>
+                        
+                        <dt>C-Rate</dt>
+                        <dd>A metric indicating battery charge/discharge speeds relative to total capacity (e.g., 0.5C rate).</dd>
+                        
+                        <dt>Thermal Runaway</dt>
+                        <dd>A dangerous reaction chain in batteries caused by excessive heat. Prevented by safety thresholds in the BMS telemetry.</dd>
+
+                        <!-- Navigation & GPS -->
+                        <dt>GNSS</dt>
+                        <dd>Global Navigation Satellite System, the general term for satellite constellations (GPS, GLONASS, Galileo, BeiDou).</dd>
+                        
+                        <dt>3D Fix vs. 2D Fix</dt>
+                        <dd>A 3D Fix locks 4+ satellites (horizontal coordinates + altitude); a 2D Fix locks 3 satellites (horizontal only); No Fix is searching.</dd>
+                        
+                        <dt>Anchor Geofence</dt>
+                        <dd>A virtual boundary radius centered on deployment coordinates. Exceeding this triggers drifting notifications.</dd>
+                        
+                        <dt>NMEA-0183 Sentence</dt>
+                        <dd>The standard ASCII text format (e.g., $GPRMC) sent by GPS hardware receivers to report location, time, and quality.</dd>
+                        
+                        <dt>Drift Threshold</dt>
+                        <dd>The maximum allowed distance (in meters) a buoy can move from its anchor point before being flagged as drifting.</dd>
+
+                        <!-- Software & System -->
+                        <dt>Exit Code</dt>
+                        <dd>The status integer returned by a completed subprocess. Code 0 indicates success; non-zero indicates an execution error.</dd>
+                        
+                        <dt>Subprocess Shell</dt>
+                        <dd>An isolated command executor session run in the background on the buoy's local Linux environment.</dd>
+                        
+                        <dt>Waitress Server</dt>
+                        <dd>A production-ready, multithreaded WSGI web server running the Python base station application.</dd>
+                        
+                        <dt>Flask Framework</dt>
+                        <dd>The lightweight python micro-framework hosting the REST API endpoints and rendering templates.</dd>
+                        
+                        <dt>LocalStorage</dt>
+                        <dd>Client-side browser database storage used to persist dark mode themes, cleared notifications, and layout preferences.</dd>
+                        
+                        <dt>Command Blocklist</dt>
+                        <dd>A security filter implemented in the buoy software that automatically rejects hazardous shell commands.</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>    
+            <div class="help-drawer-footer">
+                <p>System Version: 2.1.0</p>
+                <p class="code">Host: 0.0.0.0:8080</p>
+            </div>
+    </aside>
+
+    <!-- Search / Command Palette Dialog Modal -->
+    <dialog class="palette-modal" id="paletteModal">
+        <div class="palette-content">
+            <div class="palette-search-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="palette-search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="paletteInput" placeholder="Type a view name, command, or glossary term..." oninput="filterPaletteResults()">
+                <button class="palette-close-btn" onclick="closePalette()">Esc</button>
+            </div>
+            <div class="palette-results" id="paletteResults">
+                <!-- Javascript populates items here -->
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Operator Feedback Modal -->
+    <dialog class="feedback-modal" id="feedbackModal">
+        <div class="modal-card">
+            <div class="modal-card-header">
+                <h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Operator Feedback Report
+                </h3>
+                <button class="close-btn" onclick="closeFeedbackModal()" aria-label="Close Feedback Modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="inline-icon" style="margin: 0;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-card-body">
+                <form id="feedbackForm" onsubmit="submitFeedbackForm(event)">
+                    <div class="form-group">
+                        <label for="feedbackOperator">Operator Name</label>
+                        <input type="text" id="feedbackOperator" required placeholder="e.g. Technician Smith">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackCategory">Issue Category</label>
+                        <select id="feedbackCategory">
+                            <option value="Network">LoRa Link Drop</option>
+                            <option value="Battery">Power Discharging Anomalies</option>
+                            <option value="AI">CV Species Misclassification</option>
+                            <option value="UI">Dashboard Interface Suggestion</option>
+                            <option value="General">Other / Observation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackRating">Severity Rating (1-5)</label>
+                        <input type="number" id="feedbackRating" min="1" max="5" value="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="feedbackMessage">Observations & Details</label>
+                        <textarea id="feedbackMessage" rows="4" required placeholder="Describe what you observed on the buoy nodes or screen..."></textarea>
+                    </div>
+                    <div class="modal-card-actions">
+                        <button type="submit" class="btn btn-primary">Submit Log</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeFeedbackModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Guided Tour Wizard Overlay -->
+    <div class="tour-overlay" id="tourOverlay" style="display:none;">
+        <div class="tour-card" id="tourCard">
+            <div class="tour-header">
+                <h4 id="tourTitle">Onboarding Step 1</h4>
+                <span id="tourStepIndicator">1 / 5</span>
+            </div>
+            <p class="tour-body" id="tourBody">Step description goes here.</p>
+            <div class="tour-actions">
+                <button class="btn btn-secondary" onclick="prevTourStep()" id="tourPrevBtn">Back</button>
+                <button class="btn btn-primary" onclick="nextTourStep()" id="tourNextBtn">Next</button>
+                <button class="tour-skip" onclick="endOnboardingTour()">Skip Guide</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Alert Center Pop-out -->
+    <div class="notification-drawer" id="notifDrawer" style="display:none;">
+        <div class="notif-header">
+            <h4>
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                Telemetry Event Feed
+            </h4>
+            <span class="clear-notif" onclick="clearNotifications()">Clear</span>
+        </div>
+        <div class="notif-body" id="notifFeed">
+            <div class="notif-empty">No new events recorded.</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-layout">
+        <div class="footer-content">
+            <p>&copy; 2026 FishTrack Marine Mesh Telemetry. All rights reserved.</p>
+            <div class="footer-links">
+                <div class="footer-links">
+                    <span class="footer-link-item" onclick="startOnboardingTour()">
+                        <i class="fas fa-book-open"></i> Help Guide
+                    </span>
+
+                    <span class="footer-link-item" onclick="toggleHelpDrawer('system')">
+                        <i class="fas fa-file-alt"></i> Documentation
+                    </span>
+
+                    <span class="footer-link-item" onclick="openFeedbackModal()">
+                        <i class="fas fa-bug"></i> Report Issue
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "type": "linux_cmd_result",
+  "command_id": "285e6521",
+  "command": "vcgencmd measure_temp",
+  "exit_code": 0,
+  "feedback_type": "result",
+  "output": "temp=46.1'C",
+  "timestamp": 1770857416.7048569,
+  "from": "BUOY-POSEIDON",
+  "_metadata": {
+    "received_from": "BUOY-POSEIDON",
+    "received_at": 1770857449.7711496,
+    "received_at_readable": "2026-02-12T00:50:49.771149",
+    "data_type": "linux_command",
+    "saved_to": "C:\\Users\\EJ\\Desktop\\FISHTRACK\\__MACOSX\\BASE_STATION\\data\\received\\command_results\\linux_commands\\BUOY-POSEIDON_20260212_005049_linux_cmd.json",
+    "categorization_method": "automatic",
+    "base_station": "ATLAS - BASE_STATION"
+  },
+  "saved_at_base": "2026-02-12T00:50:49.772684"
+}

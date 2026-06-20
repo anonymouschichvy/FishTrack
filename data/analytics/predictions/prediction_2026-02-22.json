@@ -1,0 +1,743 @@
+{
+  "date": "2026-02-22",
+  "buoys": {
+    "BUOY-POSEIDON": {
+      "buoy_name": "BUOY-POSEIDON",
+      "location_desc": "BUOY-POSEIDON (Central Marinduque Pass)",
+      "coordinates": {
+        "lat": 13.482121,
+        "lon": 122.053279
+      },
+      "environmental_conditions": {
+        "timestamp": "2026-02-22T00:00:00Z",
+        "latitude": 13.482121,
+        "longitude": 122.053279,
+        "num_satellites": null,
+        "fix_quality": "Offline",
+        "altitude_m": 0.0,
+        "battery_percent": null,
+        "battery_voltage_v": null,
+        "battery_charge_state": "Offline",
+        "camera_processed_frames": 0,
+        "sonar_total_scans": 0,
+        "sonar_detections_count": 0,
+        "buoy_name": "BUOY-POSEIDON",
+        "location_desc": "Central Marinduque Pass",
+        "water_body": "Marine Pass",
+        "is_fallback": false,
+        "has_data": false,
+        "reference_date": null,
+        "actual_fish_records": []
+      },
+      "predictions": [
+        {
+          "scientific_name": "Lampris guttatus",
+          "common_name": "Bullet Tuna",
+          "availability_period": "Year-round",
+          "location_preference": "Found in various coastal areas",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "10 - 150m",
+          "importance": "High commercial value for local canning and fresh fish markets; key pelagic predator.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Carangoides oblongus",
+          "common_name": "Frigate Tuna (Tulingan)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "5 - 100m",
+          "importance": "Supports small-scale coastal artisanal fisheries and local food markets. Popular in regional wet markets.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Stolephorus spp.",
+          "common_name": "Yellowfin Tuna (Tambakol)",
+          "availability_period": "Year-round",
+          "location_preference": "Found in various coastal areas",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "5 - 100m",
+          "importance": "Major target for commercial purse seiners and local handline fishers; fetches high market value.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Katsuwonus pelamis",
+          "common_name": "Indian Mackerel (Bangus)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "0 - 200m",
+          "importance": "Globally one of the most important commercial tuna species; heavily canned and traded.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Coryphaena hippurus",
+          "common_name": "Round Scad (Galunggong)",
+          "availability_period": "Year-round",
+          "location_preference": "Very common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "10 - 60m",
+          "importance": "The 'national fish' of affordable protein in the Philippines; critical commercial value for low-income households.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Scomberomorus commerson",
+          "common_name": "Anchovies (Dilis)",
+          "availability_period": "Year-round",
+          "location_preference": "Very common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "2 - 30m",
+          "importance": "Massive ecological significance as a primary food source for larger commercial fish; sold dried (tuyo) or as fish sauce (patis).",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Scomberomorus commerson",
+          "common_name": "Skipjack Tuna (Gulyasan)",
+          "availability_period": "Year-round",
+          "location_preference": "Very common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "0 - 120m",
+          "importance": "Highly important commercial species globally and locally; heavily traded in markets and canned.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Sardinella gibbosa",
+          "common_name": "Short Mackerel (Hasahasa)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "5 - 40m",
+          "importance": "Key food source for local coastal communities; sold fresh, dried, or salted.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Selar crumenophthalmus",
+          "common_name": "Snapper (Maya-maya)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "10 - 80m",
+          "importance": "Premium market fish; high eco-tourism value for divers and fishers.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Family Scaridae",
+          "common_name": "Grouper (Lapu-lapu)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "5 - 60m",
+          "importance": "Extremely high value live food fish trade; critical for maintaining reef food-web health.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Decapterus kurroides",
+          "common_name": "Emperor Fish (Apahap)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "10 - 100m",
+          "importance": "Prized food and sport fish; common in Philippine markets and restaurants.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Elagatis bipinnulata",
+          "common_name": "Needlefish (Agujon)",
+          "availability_period": "Year-round",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "0 - 10m",
+          "importance": "Minor commercial importance; caught incidentally by coastal fishers.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Nemipterus spp.",
+          "common_name": "Bigeye Scad (Matangbaka)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "10 - 80m",
+          "importance": "Highly abundant; one of the most important commercial small pelagics in Marinduque.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Genus Naso",
+          "common_name": "Parrot Fish (Loro)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "5 - 40m",
+          "importance": "Important reef ecosystem species; sand production and reef health maintenance.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Genus Siganus",
+          "common_name": "Redtail Scad",
+          "availability_period": "Year-round",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "5 - 60m",
+          "importance": "Important commercial small pelagic; significant catch volume in Marinduque.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Mugil cephalus",
+          "common_name": "Goatfish (Bangus)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "2 - 25m",
+          "importance": "Major aquaculture species in the Philippines; critical local commodity for milkfish (bangus) farms.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Chanos chanos",
+          "common_name": "Triggerfish",
+          "availability_period": "Year-round",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "5 - 60m",
+          "importance": "Minor commercial importance; incidentally caught by reef fishers.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Oreochromis niloticus",
+          "common_name": "Barracuda",
+          "availability_period": "Year-round",
+          "location_preference": "Less common; found in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "1 - 100m",
+          "importance": "Moderate commercial value; popular game fish for sport anglers.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Decapterus macrosoma",
+          "common_name": "Red Bigeye Scad",
+          "availability_period": "Year-round",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "15 - 100m",
+          "importance": "Important commercial scad species in Philippine inshore fisheries.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Carangoides oblongus",
+          "common_name": "Mullet (Bubuli)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "0 - 10m",
+          "importance": "Important food fish in coastal communities; cultivated in brackish-water ponds.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Stolephorus spp.",
+          "common_name": "Milkfish (Bangus)",
+          "availability_period": "Year-round",
+          "location_preference": "Common in coastal waters",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "0 - 30m",
+          "importance": "National fish of the Philippines; cornerstone of aquaculture industry and household nutrition.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Katsuwonus pelamis",
+          "common_name": "Tilapia",
+          "availability_period": "Year-round",
+          "location_preference": "Common in freshwater bodies",
+          "probability": 100.0,
+          "confidence": "HIGH",
+          "depth_range": "0 - 10m",
+          "importance": "Most popular aquaculture species in the Philippines; vital for inland food security and aquaculture livelihoods.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Date falls in availability window (Year-round)",
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Decapterus macrosoma",
+          "common_name": "Swordfish",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in deeper offshore waters",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "20 - 150m",
+          "importance": "Essential commercial forage fish locally, widely consumed fresh and dried.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Deeper preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Rastrelliger brachysoma",
+          "common_name": "Moon Fish (Opah)",
+          "availability_period": "April\u2013June",
+          "location_preference": "Rare; found in deeper offshore waters",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "50 - 500m",
+          "importance": "Rare bycatch of commercial longliners; prized as a novelty fish in specialty restaurants.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Deeper preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (April\u2013June)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Caesio cuning",
+          "common_name": "Oblong Trevally",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "5 - 60m",
+          "importance": "Commercially important species in coastal Philippine fisheries; sold fresh in markets.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Sardinella lemuru",
+          "common_name": "Dolphin Fish (Mahi-mahi)",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in deeper offshore waters",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "0 - 85m",
+          "importance": "Highly prized game and export fish; popular in restaurants and seafood markets.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Deeper preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Lutjanus spp.",
+          "common_name": "Fusilier (Dalagang Bukid)",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "5 - 100m",
+          "importance": "Commercially important schooling fish; significant component of Philippine reef fisheries catch.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Epinephelus spp.",
+          "common_name": "Spanish Mackerel (Tanigue)",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "10 - 75m",
+          "importance": "Prized game and food fish; fetches premium prices in local and national seafood restaurants.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Lates calcarifer",
+          "common_name": "Narrow-Barred Spanish Mackerel",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "15 - 200m",
+          "importance": "One of the most commercially important mackerel species in Southeast Asian fisheries.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Tylosurus crocodilus",
+          "common_name": "Bali Sardinella",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "0 - 50m",
+          "importance": "Major sardine species important for canning industry and coastal food security.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Family Exocoetidae",
+          "common_name": "Goldstripe Sardinella",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "0 - 60m",
+          "importance": "Important commercially; sold fresh and dried in coastal markets.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Aluterus monoceros",
+          "common_name": "Flying Fish (Ikan Terbang)",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "0 - 20m",
+          "importance": "Minor commercial importance; used as bait and dried fish in coastal areas.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Cubiceps whiteleggii",
+          "common_name": "Rainbow Runner trout",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "0 - 150m",
+          "importance": "Popular game fish with good commercial value; prized for sport fishing.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Family Mullidae",
+          "common_name": "Unicorn Leatherjacket",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "10 - 100m",
+          "importance": "Minor commercial importance; caught as bycatch and sold locally.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Family Balistidae",
+          "common_name": "Threadfin Bream (Bisugo)",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "15 - 100m",
+          "importance": "Important commercial demersal species; widely consumed fresh or as fish paste (bagoong).",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Sphyraena barracuda",
+          "common_name": "Unicorn Fish",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "1 - 100m",
+          "importance": "Reef ecosystem keystone species; important for reef health through grazing.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Selar crumenophthalmus",
+          "common_name": "Siganids (Rabbitfish)",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "1 - 30m",
+          "importance": "Very important in local coastal fisheries; high demand in fresh fish markets.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Trichiurus lepturus",
+          "common_name": "Shadow Driftfish",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "50 - 600m",
+          "importance": "Rare bycatch in deep-sea fisheries; occasional incidental capture by longliners.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        },
+        {
+          "scientific_name": "Lampris guttatus",
+          "common_name": "Largehead Hairtail",
+          "availability_period": "March\u2013May",
+          "location_preference": "Less common; found in coastal areas",
+          "probability": 75.0,
+          "confidence": "MEDIUM",
+          "depth_range": "30 - 300m",
+          "importance": "Commercially important demersal species in Southeast Asia; popular in local wet markets.",
+          "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO.",
+          "matches": [
+            "Proximity match: Coastal preference matches Marine Pass zone"
+          ],
+          "mismatches": [
+            "Target month (February) is outside typical seasonal window (March\u2013May)"
+          ],
+          "is_detected": false
+        }
+      ],
+      "water_quality_status": "Hardware Offline",
+      "biodiversity_indicator": "Optimal",
+      "alerts": [],
+      "recommendations": [
+        "Deploy YOLO camera triggers for: Bullet Tuna which has 100.0% presence indicators.",
+        "Acoustic Correlation: Sonar logs show 0 biomass targets. Match with camera run counts (0 frames).",
+        "Verify coordinates: Buoy GPS lock at 13.4821\u00b0, 122.0533\u00b0 fits BFAR municipal distribution: <em>\"Found in various coastal areas\"</em>.",
+        "Energy Preservation: Monitor charging curves and LiFePO4 cells status (Offline level, --V) in state 'Offline'."
+      ],
+      "ai_analysis": "<p>FishTrack analysis for BUOY-POSEIDON confirms its current offline status as of 2026-02-22, rendering real-time telemetry data unavailable. System diagnostics are underway to restore functionality.</p>\n\n<p>Based on historical patterns within the BFAR MIMAROPA database for this sector, February typically represents a transitional period. Waters generally experience reduced intensity of the northeast monsoon, leading to calmer conditions. This month often marks the onset of initial upwelling events, enriching nutrient levels and potentially attracting migratory pelagic species. Furthermore, some demersal species may begin their spawning activities, influencing localized biomass distribution.</p>",
+      "citation": "Republic of the Philippines, Department of Agriculture, Bureau of Fisheries and Aquatic Resources (BFAR) Regional Fisheries Office - MIMAROPA, Provincial Fishery Office, Boac, Marinduque. Noted by: Joel G. Malabana, OIC, PFO."
+    }
+  },
+  "verified_telemetry_dates": [
+    "2026-02-11",
+    "2026-02-12",
+    "2026-02-15",
+    "2026-02-17",
+    "2026-02-18",
+    "2026-02-19",
+    "2026-02-20"
+  ],
+  "verified_detection_dates": [
+    "2026-02-17",
+    "2026-02-18",
+    "2026-02-19",
+    "2026-02-20"
+  ],
+  "generated_at": "2026-06-19T12:36:48.492078Z"
+}

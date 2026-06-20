@@ -1,0 +1,36 @@
+{
+  "date": "2026-02-13",
+  "buoys": {
+    "BUOY-POSEIDON": {
+      "environment": {
+        "timestamp": "2026-02-13T00:00:00Z",
+        "latitude": 13.482121,
+        "longitude": 122.053279,
+        "num_satellites": null,
+        "fix_quality": "Offline",
+        "altitude_m": 0.0,
+        "battery_percent": null,
+        "battery_voltage_v": null,
+        "battery_charge_state": "Offline",
+        "camera_processed_frames": 0,
+        "sonar_total_scans": 0,
+        "sonar_detections_count": 0,
+        "buoy_name": "BUOY-POSEIDON",
+        "location_desc": "Central Marinduque Pass",
+        "water_body": "Marine Pass",
+        "is_fallback": false,
+        "has_data": false,
+        "reference_date": null,
+        "actual_fish_records": []
+      },
+      "camera_detections": 0,
+      "sonar_detections": 0
+    }
+  },
+  "total_detections": 0,
+  "avg_satellites": 0.0,
+  "avg_battery_charge": 0.0,
+  "total_processed_frames": 0,
+  "total_sonar_scans": 0,
+  "aggregated_at": "2026-06-19T06:44:47.969049Z"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "linux_cmd_result",
+  "command_id": "5a6d4b04",
+  "command": "shutdown",
+  "exit_code": 0,
+  "feedback_type": "status",
+  "output": "Command executed successfully",
+  "timestamp": 1770857619.9959552,
+  "from": "BUOY-POSEIDON",
+  "_metadata": {
+    "received_from": "BUOY-POSEIDON",
+    "received_at": 1770857653.112053,
+    "received_at_readable": "2026-02-12T00:54:13.112053",
+    "data_type": "linux_command",
+    "saved_to": "C:\\Users\\EJ\\Desktop\\FISHTRACK\\__MACOSX\\BASE_STATION\\data\\received\\command_results\\linux_commands\\BUOY-POSEIDON_20260212_005413_linux_cmd.json",
+    "categorization_method": "automatic",
+    "base_station": "ATLAS - BASE_STATION"
+  },
+  "saved_at_base": "2026-02-12T00:54:13.114077"
+}

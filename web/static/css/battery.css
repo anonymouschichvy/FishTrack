@@ -1,0 +1,82 @@
+/* Battery Monitor – page-specific styles */
+.header-battery {
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+    margin-bottom: 2rem; border-radius: 16px; padding: 2rem 2.5rem;
+    box-shadow: 0 6px 24px var(--shadow); border: 1px solid rgba(229,231,235,0.6);
+}
+[data-theme="dark"] .header-battery { background: rgba(30,41,59,0.96); border-color: rgba(255,255,255,0.05); }
+
+.battery-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+    gap: 1.75rem; margin-bottom: 2rem;
+}
+
+.card-container {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.battery-card {
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(10px);
+    border-radius: 16px; padding: clamp(1.25rem, 2vw, 1.75rem);
+    box-shadow: 0 6px 20px var(--shadow); border: 1px solid rgba(229,231,235,0.5);
+    transition: all 0.25s ease;
+}
+[data-theme="dark"] .battery-card { background: rgba(30,41,59,0.97); border-color: rgba(255,255,255,0.05); }
+.battery-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px var(--shadow-lg); }
+.battery-card:nth-child(1){animation-delay:.1s} .battery-card:nth-child(2){animation-delay:.15s}
+.battery-card:nth-child(3){animation-delay:.2s} .battery-card:nth-child(4){animation-delay:.25s}
+.battery-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.battery-name { display: flex; align-items: center; gap: 0.875rem; }
+.battery-icon { width: 32px; height: 32px; color: var(--dark); }
+.battery-title { font-size: 1.25rem; font-weight: 700; color: var(--dark); font-family: 'Inter', system-ui, sans-serif; }
+.battery-status { font-size: 0.875rem; font-weight: 600; padding: 0.375rem 1rem; border-radius: 1rem; border: 1px solid; }
+.status-charging { color: #92400e; background: #fffbeb; border-color: #fde68a; }
+.status-discharging { color: #1e40af; background: #eff6ff; border-color: #bfdbfe; }
+.status-full { color: #065f46; background: #ecfdf5; border-color: #a7f3d0; }
+.status-warning { color: #991b1b; background: #fef2f2; border-color: #fecaca; }
+.battery-percent { font-size: 3.75rem; font-weight: 800; text-align: center; margin: 1.75rem 0; font-family: 'Cascadia Code', monospace; letter-spacing: -1px; }
+.percent-high    { color: var(--success); }
+.percent-medium  { color: var(--warning); }
+.percent-low     { color: var(--danger); }
+.battery-bar-container { width: 100%; height: 28px; background: #e5e7eb; border-radius: 14px; overflow: hidden; margin-bottom: 1.75rem; box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); }
+[data-theme="dark"] .battery-bar-container { background: rgba(255,255,255,0.1); }
+.battery-bar { height: 100%; border-radius: 14px; transition: width 0.8s ease; }
+.bar-high    { background: #16a34a; }
+.bar-medium  { background: #d97706; }
+.bar-low     { background: #dc2626; }
+.battery-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.detail-item { background: #f8fafc; padding: 1.125rem; border-radius: 10px; border: 1px solid #e2e8f0; }
+[data-theme="dark"] .detail-item { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+.detail-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.4px; margin-bottom: 0.375rem; }
+.detail-value { font-size: 1.25rem; font-weight: 700; color: var(--dark); font-family: 'Cascadia Code', monospace; }
+.warning-banner {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px;
+    padding: 1rem 1.25rem; margin-top: 1.5rem; color: #991b1b;
+    font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.75rem;
+}
+
+.loading-container, .empty-state {
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(10px);
+    border-radius: 16px; border: 1px solid rgba(229,231,235,0.5);
+    box-shadow: 0 6px 20px var(--shadow); padding: 5rem 2rem;
+    text-align: center; grid-column: 1 / -1;
+}
+[data-theme="dark"] .loading-container, [data-theme="dark"] .empty-state { background: rgba(30,41,59,0.97); }
+.spinner { width: 56px; height: 56px; border: 5px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.25rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1.5rem; margin: 2rem 0; }
+.summary-card { background: rgba(255,255,255,0.97); border-radius: 14px; padding: 1.5rem; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px var(--shadow); }
+[data-theme="dark"] .summary-card { background: rgba(30,41,59,0.97); border-color: rgba(255,255,255,0.1); }
+.summary-label { font-size: 0.8125rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+.summary-value { font-size: 2.125rem; font-weight: 800; font-family: 'Cascadia Code', monospace; color: var(--primary); }
+.overall-battery { grid-column: 1 / -1; border: 1px solid #bfdbfe; background: #f0f9ff; }
+[data-theme="dark"] .overall-battery { background: rgba(30,58,138,0.2); border-color: rgba(99,102,241,0.3); }
+
+@media (max-width: 768px) { .battery-grid{grid-template-columns:1fr} .battery-details{grid-template-columns:1fr} .battery-percent{font-size:3rem} .summary-stats{grid-template-columns:1fr} }
+@media (max-width: 480px) { .battery-card{padding:1.5rem} .battery-percent{font-size:2.5rem} .detail-value{font-size:1.125rem} }

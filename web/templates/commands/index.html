@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Command Center - FishTrack{% endblock %}
+
+{% block crumb %}Command Center{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/commands.css">
+    <script src="/static/js/commands.js" defer></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- ── Hero ── -->
+<div class="welcome-hero" style="background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);" id="commandsHero">
+    <div class="hero-text">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Command Center
+        </h1>
+        <p>Dispatch preset scripts to remote buoy nodes over LoRa</p>
+    </div>
+    <div class="hero-status">
+        <span class="status-badge" style="background: rgba(255,255,255,0.15); color: white; backdrop-filter:blur(6px);" id="loraTxBadge">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" style="margin-right:5px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+            Half-Duplex Link Ready
+        </span>
+    </div>
+</div>
+
+<!-- ── Explainer ── -->
+<div class="info-card-wizard" id="commandsExplainer">
+    <div class="wizard-header">
+        <span class="wizard-tag">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+            Radio Command Flow
+        </span>
+        <h3>How Commands Are Sent via LoRa</h3>
+    </div>
+    <div style="font-size:0.875rem; color:var(--text-secondary); line-height:1.65; display:flex; flex-direction:column; gap:0.4rem; margin-top:0.75rem;">
+        <p><strong>What is this interface?</strong> Dispatch pre-compiled task scripts to remote buoy nodes (fish detection, battery reports, sonar profiles). For raw shell access use the <a href="/linux_commands/" style="color:var(--primary); text-decoration:underline; font-weight:500;">Linux Console</a> from the sidebar.</p>
+        <p><strong>Why is there a delay?</strong> LoRa duty-cycle limits (≈1%) mean packets are queued and sent during the node's listening window. An <strong>ACK</strong> confirms receipt; <strong>CMD_STATUS</strong> follows on task completion.</p>
+    </div>
+</div>
+
+<!-- ── Alert Banner ── -->
+<div id="alert" class="alert"></div>
+
+<!-- ═══════════════════════════════════════════
+     STEP 1 – Configure & Dispatch
+════════════════════════════════════════════ -->
+<div class="cc-section">
+
+    <!-- Section label -->
+    <div class="cc-section-header">
+        <span class="cc-step">1</span>
+        <div>
+            <h3 class="cc-section-title">Configure &amp; Dispatch</h3>
+            <p class="cc-section-sub">Select a target buoy node, choose one or more preset scripts, then send.</p>
+        </div>
+    </div>
+
+    <div class="cc-dispatch-card">
+
+        <!-- Row: Node selector -->
+        <div class="cc-field-row">
+            <div class="cc-field">
+                <label class="cc-label" for="target">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                    Target Buoy Node
+                </label>
+                <select id="target">
+                    <option value="">Select a node...</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Preset scripts -->
+        <div class="cc-field" style="margin-top: 1.25rem;">
+            <label class="cc-label">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                Available Presets
+            </label>
+            <p class="educational-note" style="margin-bottom:0.75rem;">Select one or more scripts to execute. Optionally provide argument flags per script.</p>
+            <div class="scripts-grid" id="scripts-list">
+                <div class="cc-loading">
+                    <div class="spinner"></div>
+                    <span>Loading scripts...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dispatch button -->
+        <div class="cc-dispatch-footer">
+            <button class="cc-send-btn" onclick="sendCommand()" id="send-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>Send Command</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     STEP 2 – Active Command Queue
+════════════════════════════════════════════ -->
+<div class="cc-section" style="margin-top: 2rem;">
+
+    <div class="cc-section-header">
+        <span class="cc-step cc-step--queue">2</span>
+        <div>
+            <h3 class="cc-section-title">Active Command Queue</h3>
+            <p class="cc-section-sub">Live transmission log. Auto-refreshes every 5 s.</p>
+        </div>
+        <span class="status-pill info" style="margin-left:auto;">BMS &amp; Sensor Queues</span>
+    </div>
+
+    <div class="card-container" style="margin-top: 0.75rem; padding: 0; overflow: hidden;">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command ID</th>
+                        <th>Target</th>
+                        <th>Scripts</th>
+                        <th>Status</th>
+                        <th>ACK</th>
+                        <th>Sent At</th>
+                    </tr>
+                </thead>
+                <tbody id="commands-status">
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <div class="spinner"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block help_content %}
+<div class="help-section">
+    <h4>Command Docs</h4>
+    <p><strong>Preset Scripts:</strong> Pre-installed on each node. They execute quickly with minimal payload sizes, reducing LoRa collision probability compared to raw Linux commands.</p>
+</div>
+<div class="help-section">
+    <h4>Troubleshooting</h4>
+    <p><strong>Queued Status:</strong> If a command stays "QUEUED" or "PENDING" for more than 2 minutes, check the RSSI strength of the node — it may have missed its wake window or the radio link is degraded.</p>
+</div>
+<div class="help-section">
+    <h4>Glossary</h4>
+    <dl class="glossary-list">
+        <dt>ACK (Acknowledgement)</dt>
+        <dd>A small packet returned by the node confirming it successfully demodulated the command packet.</dd>
+        <dt>Exit Code</dt>
+        <dd>A status code from a process. 0 = normal completion; non-zero (1, 127…) = execution error.</dd>
+    </dl>
+</div>
+{% endblock %}

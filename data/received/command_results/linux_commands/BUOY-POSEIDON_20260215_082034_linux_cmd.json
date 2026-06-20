@@ -1,0 +1,20 @@
+{
+  "type": "linux_cmd_result",
+  "command_id": "2a5a5f3a",
+  "command": "free -h",
+  "exit_code": 0,
+  "feedback_type": "result",
+  "output": "total        used        free      shared  buff/cache   available\nMem:           7.9Gi       528Mi       6.7Gi        47Mi       804Mi       7.4Gi\nSwap:          2.0Gi          0B       2.0Gi",
+  "timestamp": 1771143586.0532126,
+  "from": "BUOY-POSEIDON",
+  "_metadata": {
+    "received_from": "BUOY-POSEIDON",
+    "received_at": 1771143634.0578272,
+    "received_at_readable": "2026-02-15T08:20:34.057827",
+    "data_type": "linux_command",
+    "saved_to": "C:\\Users\\EJ\\Desktop\\FISHTRACK\\__MACOSX\\BASE_STATION\\data\\received\\command_results\\linux_commands\\BUOY-POSEIDON_20260215_082034_linux_cmd.json",
+    "categorization_method": "automatic",
+    "base_station": "ATLAS - BASE_STATION"
+  },
+  "saved_at_base": "2026-02-15T08:20:34.059829"
+}
