@@ -136,12 +136,8 @@ This research project adheres to data guidelines and taxonomy records provided b
 > *Provincial Fishery Office, Boac, Marinduque*
 > *Noted by: Joel G. Malabana, OIC, PFO*
 
----
-
-<p align="center">
-  Developed as part of the FishTrack Wireless Telemetry Research Initiative. 🌊📡🐠
-</p>
-
+## 💖 Donate & Support
+If you find this project useful and would like to support the deployment of FishTrack buoys for coastal fishing communities, donations are greatly appreciated!
 <p align="left">
   <a href="bitcoin:13zWnp2ty3NPzAXX9QxwEeoPSKhN5tPzic">
     <img src="https://img.shields.io/badge/Donate-Bitcoin-F7931A?style=for-the-badge&logo=bitcoin&logoColor=white" alt="Donate Bitcoin" />
