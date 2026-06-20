@@ -41,7 +41,7 @@ Because high-frequency radio waves degrade rapidly over open water and physical 
 *   **Real-time Flask Dashboard:** Sleek Web GUI featuring network stats, live telemetry (GPS & Battery), active commands control center, and audit logging.
 
 <p align="center">
-  <img src="docs/images/yolo_detection.png" alt="YOLO Fish Detection HUD" width="80%"><br>
+  <img src="docs/images/yolo_detection.png" alt="YOLO Fish Detection HUD" width="100%"><br>
   <em>Figure 2: Simulated underwater camera feed illustrating the YOLO detection bounding box matched with local BFAR taxonomic labels.</em>
 </p>
 
