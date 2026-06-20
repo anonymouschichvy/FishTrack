@@ -1,4 +1,4 @@
-# <p align="center"><img src="docs/images/logo.jpg" alt="FishTrack Logo" width="2000" />
+# <p align="center"><img src="docs/images/logo.jpg" alt="FishTrack Logo" width="100%" />
 
 <p align="center">
   <strong>Multi-Hop LoRa Mesh Network & AI-Powered Oceanographic Monitoring Control Center</strong>
@@ -25,7 +25,7 @@ The project is developed in collaboration with research data and taxonomy guidel
 Because high-frequency radio waves degrade rapidly over open water and physical obstructions, FishTrack implements a custom multi-hop routing protocol. Edge buoy nodes float on the ocean, capture marine data, and relay messages through each other until they reach the land-based **ATLAS Base Station**.
 
 <p align="center">
-  <img src="docs/images/mesh_network.png" alt="LoRa Mesh Network Architecture" width="80%"><br>
+  <img src="docs/images/mesh_network.png" alt="LoRa Mesh Network Architecture" width="100%"><br>
   <em>Figure 1: Conceptual visualization of the multi-hop LoRa buoy mesh network communicating with the coastal ATLAS Base Station.</em>
 </p>
 
