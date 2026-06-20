@@ -141,3 +141,11 @@ This research project adheres to data guidelines and taxonomy records provided b
 <p align="center">
   Developed as part of the FishTrack Wireless Telemetry Research Initiative. 🌊📡🐠
 </p>
+
+<p align="left">
+  <a href="bitcoin:13zWnp2ty3NPzAXX9QxwEeoPSKhN5tPzic">
+    <img src="https://img.shields.io/badge/Donate-Bitcoin-F7931A?style=for-the-badge&logo=bitcoin&logoColor=white" alt="Donate Bitcoin" />
+  </a>
+</p>
+
+**Bitcoin Address:** `13zWnp2ty3NPzAXX9QxwEeoPSKhN5tPzic`
