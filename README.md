@@ -1,4 +1,4 @@
-# <p align="center"><img src="docs/images/logo.jpg" alt="FishTrack Logo" width="100%" />
+# <p align="center"> <img src="docs/images/logo.jpg" alt="FishTrack Logo" style="max-width:100%; height:auto;" /> </p>
 
 <p align="center">
   <strong>Multi-Hop LoRa Mesh Network & AI-Powered Oceanographic Monitoring Control Center</strong>
