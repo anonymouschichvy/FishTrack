@@ -125,7 +125,7 @@ http://localhost:8080
 
 ---
 
-## 📜 official BFAR MIMAROPA Citation
+## 📜 Official BFAR MIMAROPA Citation
 
 This research project adheres to data guidelines and taxonomy records provided by:
 
