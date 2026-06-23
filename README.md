@@ -5,6 +5,7 @@
 </p>
 
 <p align="center">
+    <a href="https://doi.org/10.5281/zenodo.20716346"> <img src="https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.20716346-1682D4?style=for-the-badge" alt="Zenodo DOI" /> </a>
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python" alt="Python Version" />
   <img src="https://img.shields.io/badge/Flask-Web%20Dashboard-orange?style=for-the-badge&logo=flask" alt="Flask" />
   <img src="https://img.shields.io/badge/LoRa-Mesh%20Network-green?style=for-the-badge" alt="LoRa Mesh" />
