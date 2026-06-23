@@ -49,7 +49,7 @@ from typing import Optional
 AI_YOLO_TO_BFAR_CACHE = {}
 
 def query_gemini_api(prompt: str) -> Optional[str]:
-    key = "AQ.Ab8RN6KqmQLbtMYeFCPmuVwosluORP8IMnNtcrovr-OvTvZFjQ"
+    key = "API"
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={key}"
     headers = {"Content-Type": "application/json"}
     payload = {
