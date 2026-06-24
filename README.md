@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    <a href="https://doi.org/10.5281/zenodo.20716346"> <img src="https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.20716346-1682D4?style=for-the-badge" alt="Zenodo DOI" /> </a>
+    <a href="https://doi.org/10.5281/zenodo.20716345"> <img src="https://img.shields.io/badge/Zenodo-10.5281%2Fzenodo.20716345-1682D4?style=for-the-badge" alt="Zenodo DOI" /> </a>
   <a href="https://github.com/anonymouschichvy/FishTrack-Buoy">
   <img src="https://img.shields.io/badge/Companion_Project-FishTrack--Buoy-181717?style=for-the-badge&logo=github&logoColor=white" alt="FishTrack Buoy" />
 </a>
